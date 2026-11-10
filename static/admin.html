@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatAudit Admin</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --ink: #1c2430; --muted: #5d6878; --line: #dde1e7;
+    --accent: #1f3a5f; --accent-soft: #e6ecf4; --ok: #1e7a4c; --ok-soft: #e3f3ea;
+    --bad: #9a3b2b; --bad-soft: #f8e6e2; --bot: #eef2f7;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  header h1 { font-size: 20px; margin: 0; color: var(--accent); }
+  header .sp { flex: 1; }
+  nav { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+  nav button { font: inherit; background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 14px; cursor: pointer; color: var(--muted); }
+  nav button.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  h2 { font-size: 16px; margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 12px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .kpi .lab { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+  .kpi .val { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; margin: 2px 0; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 99px; }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); }
+  .pill.mid { background: var(--accent-soft); color: var(--accent); }
+  .tbl { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.num, th.num { text-align: right; }
+  tr.click { cursor: pointer; }
+  tr.click:hover td { background: var(--bg); }
+  button.btn, a.btn { font: inherit; display: inline-block; text-decoration: none; border: 1px solid var(--accent); background: var(--accent); color: #fff; padding: 7px 14px; border-radius: 7px; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .btn.danger { border-color: var(--bad); background: var(--bad); }
+  .btn.danger.ghost { background: transparent; color: var(--bad); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  input[type=text], input[type=password] { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; min-width: 0; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: 8px; }
+  .bars div { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+  .bars i { display: block; width: 100%; background: var(--accent); border-radius: 3px 3px 0 0; min-height: 2px; }
+  .bars span { font-size: 11px; color: var(--muted); margin-top: 4px; white-space: nowrap; }
+  .bars b { font-size: 11px; font-weight: 600; }
+  .chat { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 16px; }
+  .msg { padding: 8px 12px; border-radius: 10px; max-width: 85%; white-space: pre-wrap; }
+  .msg.u { align-self: flex-end; background: var(--accent); color: #fff; }
+  .msg.b { align-self: flex-start; background: var(--bot); }
+  .meta { font-size: 12px; color: var(--muted); align-self: flex-start; font-family: var(--mono); }
+  .fb { border-left: 3px solid var(--line); padding: 4px 12px; margin-bottom: 12px; }
+  .fb b { font-size: 12px; color: var(--muted); display: block; }
+  #drawer { position: fixed; inset: 0; background: rgba(20,28,38,.45); display: flex; justify-content: flex-end; z-index: 5; }
+  #drawer .panel { background: var(--bg); width: min(720px, 100%); height: 100%; overflow-y: auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 40px 20px; }
+  #login { max-width: 360px; margin: 12vh auto; }
+  .err { color: var(--bad); min-height: 20px; font-size: 13px; }
+  .hidden { display: none !important; }
+  code { font-family: var(--mono); font-size: 12px; }
+  .kw { color: var(--muted); font-size: 12px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Login -->
+  <div id="login" class="card hidden">
+    <h2>ChatAudit admin</h2>
+    <p class="muted small">Enter the admin password. It is shown in the terminal when the app starts, unless you set your own.</p>
+    <form id="loginForm" class="row">
+      <input type="password" id="pw" placeholder="Admin password" autocomplete="current-password" style="flex:1">
+      <button class="btn" type="submit">Log in</button>
+    </form>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="hidden">
+    <header>
+      <h1>ChatAudit admin</h1>
+      <span class="muted small" id="updated"></span>
+      <span class="sp"></span>
+      <button class="btn ghost" id="refresh">Refresh</button>
+      <button class="btn ghost" id="logout">Log out</button>
+    </header>
+    <nav id="tabs">
+      <button data-tab="overview" class="on">Overview</button>
+      <button data-tab="sessions">Sessions</button>
+      <button data-tab="feedback">Feedback</button>
+      <button data-tab="test">Test chatbot</button>
+      <button data-tab="kb">Knowledge base</button>
+      <button data-tab="analysis">Analysis</button>
+      <button data-tab="export">Export</button>
+    </nav>
+
+    <section id="t-overview"></section>
+    <section id="t-sessions" class="hidden"></section>
+    <section id="t-feedback" class="hidden"></section>
+
+    <section id="t-test" class="hidden">
+      <div class="card">
+        <h2>Try a query</h2>
+        <p class="muted small">Shows the top 3 documents and the words that matched. Nothing here is saved to participant data.</p>
+        <form id="testForm" class="row">
+          <input type="text" id="testQ" placeholder="e.g. I'm at uni, can I get money off" style="flex:1">
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <div id="testOut"></div>
+      </div>
+    </section>
+
+    <section id="t-kb" class="hidden"></section>
+
+    <section id="t-analysis" class="hidden"></section>
+
+    <section id="t-export" class="hidden">
+      <div class="card">
+        <h2>Download data</h2>
+        <p class="muted small">Completed sessions only, unless you choose "including in-progress".</p>
+        <div class="tbl"><table>
+          <tr><th>File</th><th>Contents</th><th></th></tr>
+          <tr><td>interactions.csv</td><td>One row per query: text, response, document, score, response time, rating</td>
+              <td class="row"><a class="btn" href="/api/admin/export/interactions.csv">Download</a><a class="btn ghost" href="/api/admin/export/interactions.csv?all=1">Including in-progress</a></td></tr>
+          <tr><td>tasks.csv</td><td>One row per participant and task: queries, ratings, first-try success, task time, completed</td>
+              <td class="row"><a class="btn" href="/api/admin/export/tasks.csv">Download</a><a class="btn ghost" href="/api/admin/export/tasks.csv?all=1">Including in-progress</a></td></tr>
+          <tr><td>participants.csv</td><td>One row per participant: SUS answers and score, written feedback</td>
+              <td class="row"><a class="btn" href="/api/admin/export/participants.csv">Download</a><a class="btn ghost" href="/api/admin/export/participants.csv?all=1">Including in-progress</a></td></tr>
+          <tr><td>sessions.json</td><td>Every raw session file, including in-progress ones</td>
+              <td><a class="btn" href="/api/admin/export/sessions.json">Download</a></td></tr>
+        </table></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="drawer" class="hidden"><div class="panel" id="drawerBody"></div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = (v, d = 1) => v == null ? "–" : Number(v).toFixed(d);
+const when = iso => iso ? new Date(iso).toLocaleString([], {dateStyle: "medium", timeStyle: "short"}) : "–";
+let DATA = null;
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, {headers: {"Content-Type": "application/json"}, ...opts});
+  if (r.status === 401 && !path.endsWith("/login")) { showLogin(); throw new Error("login"); }
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(body.error || r.statusText);
+  return body;
+}
+function showLogin() { $("app").classList.add("hidden"); $("login").classList.remove("hidden"); $("pw").focus(); }
+function showApp() { $("login").classList.add("hidden"); $("app").classList.remove("hidden"); }
+
+$("loginForm").onsubmit = async e => {
+  e.preventDefault(); $("loginErr").textContent = "";
+  try { await api("/api/admin/login", {method: "POST", body: JSON.stringify({password: $("pw").value})}); $("pw").value = ""; await load(); }
+  catch (err) { $("loginErr").textContent = err.message === "login" ? "" : "Wrong password. Check the terminal for the current one."; }
+};
+$("logout").onclick = async () => { await api("/api/admin/logout", {method: "POST"}); showLogin(); };
+$("refresh").onclick = () => load();
+
+$("tabs").onclick = e => {
+  const t = e.target.dataset.tab; if (!t) return;
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  document.querySelectorAll("section[id^=t-]").forEach(s => s.classList.toggle("hidden", s.id !== "t-" + t));
+  if (t === "kb") renderKB();
+  if (t === "analysis") renderAnalysis();
+};
+
+/* ---------------- overview ---------------- */
+function judge(name, v, targets) {
+  if (v == null || !(name in targets)) return "";
+  const ok = name === "MRT" ? v < targets[name] : v >= targets[name];
+  const cmp = name === "MRT" ? "<" : "≥";
+  return `<span class="pill ${ok ? "ok" : "bad"}">${ok ? "Met" : "Not met"} · target ${cmp} ${targets[name]}</span>`;
+}
+function renderOverview(d) {
+  const o = d.overall, T = d.targets;
+  if (!o) {
+    $("t-overview").innerHTML = `<div class="card"><h2>No completed sessions yet</h2>
+      <p class="muted">${d.counts.in_progress} session(s) in progress. Metrics appear here once a participant finishes the questionnaire.</p></div>`;
+    return;
+  }
+  const k = (lab, val, name, sub = "") => `<div class="kpi"><div class="lab">${lab}</div><div class="val">${val}</div>${judge(name, o[name], T)}${sub}</div>`;
+  const susBins = [0,0,0,0,0]; d.sus_scores.forEach(s => susBins[Math.min(4, Math.floor(s / 20))]++);
+  const mx = Math.max(1, ...susBins);
+  $("t-overview").innerHTML = `
+    <div class="kpis">
+      ${k("Participants", d.counts.complete, "", `<div class="muted small">${d.counts.in_progress} in progress</div>`)}
+      ${k("Retrieval success", fmt(o.RSR) + "%", "RSR")}
+      ${k("Mean relevance", fmt(o.MRS, 2) + " / 5", "MRS")}
+      ${k("Response time", fmt(o.MRT, 1) + " ms", "MRT")}
+      ${k("Task completion", fmt(o.TCR) + "%", "TCR")}
+      ${k("SUS score", fmt(o.SUS), "SUS", `<div class="muted small">SD ${fmt(o.SUS_sd)}</div>`)}
+      ${o.MTS != null ? k("Mean trust", fmt(o.MTS, 2) + " / 5", "") : ""}
+    </div>
+    <div class="grid2">
+      <div class="card"><h2>By task</h2><div class="tbl"><table>
+        <tr><th>Task</th><th class="num">Success</th><th class="num">Relevance</th><th class="num">Completed</th><th class="num">First try</th><th class="num">Queries</th><th class="num">Time</th></tr>
+        ${d.per_task.map(t => `<tr><td>${t.task_id} ${esc(t.topic)}</td>
+          <td class="num">${pct(t.RSR, T.RSR)}</td><td class="num">${pct(t.MRS, T.MRS, 2, "")}</td>
+          <td class="num">${pct(t.TCR, T.TCR)}</td><td class="num">${fmt(t.first_try_pct)}%</td>
+          <td class="num">${fmt(t.queries_per_task)}</td><td class="num">${t.task_time_s == null ? "–" : fmt(t.task_time_s, 0) + " s"}</td></tr>`).join("")}
+      </table></div><p class="muted small">Red values miss the proposal target. "First try" = first answer rated 3 or higher.</p></div>
+      <div class="card"><h2>SUS score distribution</h2>
+        <div class="bars">${susBins.map((n, i) => `<div><b>${n || ""}</b><i style="height:${n / mx * 100}%"></i><span>${i * 20}–${i * 20 + 20}</span></div>`).join("")}</div>
+        <p class="muted small">68 is the average SUS score. Mean here: ${fmt(o.SUS)}.</p></div>
+    </div>
+    <div class="card"><h2>Low-rated answers (1–2)</h2>${lowTable(d.low_rated)}</div>`;
+}
+function pct(v, target, dp = 1, unit = "%") {
+  if (v == null) return "–";
+  const bad = v < target; return `<span style="color:var(${bad ? "--bad" : "--ink"})">${fmt(v, dp)}${unit}</span>`;
+}
+function lowTable(rows) {
+  if (!rows.length) return `<p class="muted">None yet.</p>`;
+  return `<div class="tbl"><table><tr><th>Participant</th><th>Task</th><th>Query</th><th>Document</th><th class="num">Score</th><th class="num">Rating</th></tr>
+    ${rows.map(r => `<tr><td><code>${r.participant_id}</code></td><td>${r.task_id}</td><td>${esc(r.query)}</td>
+      <td>${r.doc_id ?? "<span class='muted'>no answer</span>"}</td><td class="num">${fmt(r.similarity_score, 3)}</td><td class="num">${r.relevance_rating}</td></tr>`).join("")}
+  </table></div>`;
+}
+
+/* ---------------- sessions ---------------- */
+function renderSessions(d) {
+  $("t-sessions").innerHTML = `<div class="card"><h2>All sessions (${d.sessions.length})</h2>
+    ${d.sessions.length ? `<div class="tbl"><table>
+      <tr><th>Participant</th><th>Status</th><th>Started</th><th class="num">Tasks done</th><th class="num">Found info</th><th class="num">Queries</th><th class="num">SUS</th></tr>
+      ${d.sessions.map(s => `<tr class="click" data-pid="${s.participant_id}"><td><code>${s.participant_id}</code></td>
+        <td><span class="pill ${s.status === "complete" ? "ok" : "mid"}">${s.status === "complete" ? "Complete" : "In progress"}</span></td>
+        <td>${when(s.started_at)}</td><td class="num">${s.tasks_done}/5</td><td class="num">${s.tasks_completed}/5</td>
+        <td class="num">${s.queries}</td><td class="num">${fmt(s.sus)}</td></tr>`).join("")}
+    </table></div><p class="muted small">Click a row to see the full conversation.</p>` : `<p class="muted">No sessions yet.</p>`}</div>`;
+  $("t-sessions").querySelectorAll("tr.click").forEach(tr => tr.onclick = () => openSession(tr.dataset.pid));
+}
+async function openSession(pid) {
+  const s = await api("/api/admin/session/" + pid);
+  const tasks = Object.entries(s.tasks).map(([tid, t]) => `
+    <div class="card"><h2>${tid} <span class="pill ${t.completed ? "ok" : t.completed === false ? "bad" : "mid"}">${t.completed ? "Found info" : t.completed === false ? "Did not find" : "Not finished"}</span></h2>
+      <div class="chat">${t.interactions.map(i => `
+        <div class="msg u">${esc(i.query)}</div><div class="msg b">${esc(i.response)}</div>
+        <div class="meta">doc ${i.doc_id ?? "none"} · score ${fmt(i.similarity_score, 3)} · ${fmt(i.server_response_time_ms, 2)} ms · rated ${i.relevance_rating ?? "–"}/5</div>`).join("") || "<span class='muted'>No queries.</span>"}</div></div>`).join("");
+  const fb = s.feedback ? `<div class="card"><h2>Feedback · SUS ${fmt(s.sus?.score)}</h2>
+      <div class="fb"><b>Helpful</b>${esc(s.feedback.helpful) || "–"}</div>
+      <div class="fb"><b>Disappointed</b>${esc(s.feedback.disappointed) || "–"}</div>
+      <div class="fb"><b>Would change</b>${esc(s.feedback.would_change) || "–"}</div></div>` : "";
+  $("drawerBody").innerHTML = `
+    <div class="row" style="margin-bottom:12px"><h2 style="margin:0;flex:1">Participant <code>${pid}</code></h2><button class="btn ghost" id="close">Close</button></div>
+    <p class="muted small">Started ${when(s.started_at)} · Finished ${when(s.finished_at)}</p>
+    ${fb}${tasks}
+    <div class="card"><h2>Withdraw this participant</h2>
+      <p class="muted small">Permanently deletes this session file. Use only when a participant asks to withdraw.</p>
+      <div class="row" id="delRow"><button class="btn danger ghost" id="delAsk">Delete session ${pid}</button></div></div>`;
+  $("drawer").classList.remove("hidden");
+  $("close").onclick = closeDrawer;
+  $("delAsk").onclick = () => {
+    $("delRow").innerHTML = `<span>Delete ${pid} permanently?</span><button class="btn danger" id="delYes">Yes, delete</button><button class="btn ghost" id="delNo">Cancel</button>`;
+    $("delNo").onclick = () => openSession(pid);
+    $("delYes").onclick = async () => { await api("/api/admin/session/" + pid, {method: "DELETE"}); closeDrawer(); load(); };
+  };
+}
+function closeDrawer() { $("drawer").classList.add("hidden"); }
+$("drawer").onclick = e => { if (e.target.id === "drawer") closeDrawer(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+/* ---------------- feedback ---------------- */
+function renderFeedback(d) {
+  const col = (key, title) => `<div class="card"><h2>${title}</h2>${d.feedback.filter(f => f[key]).map(f =>
+    `<div class="fb"><b>${f.participant_id}</b>${esc(f[key])}</div>`).join("") || "<p class='muted'>No answers yet.</p>"}</div>`;
+  $("t-feedback").innerHTML = `<p class="muted small">Answers to the three open questions, for thematic analysis.</p>
+    <div class="grid2">${col("helpful", "What did you find helpful?")}${col("disappointed", "What disappointed you?")}${col("would_change", "What would you change?")}</div>`;
+}
+
+/* ---------------- test chatbot ---------------- */
+$("testForm").onsubmit = async e => {
+  e.preventDefault();
+  const q = $("testQ").value.trim(); if (!q) return;
+  const r = await api("/api/admin/search", {method: "POST", body: JSON.stringify({query: q})});
+  $("testOut").innerHTML = `<p>${r.would_answer ? `<span class="pill ok">Would answer</span>` : `<span class="pill bad">Would say "no answer"</span>`}
+      <span class="muted small">threshold ${r.threshold} · ${fmt(r.response_time_ms, 2)} ms</span></p>
+    <div class="tbl"><table><tr><th>#</th><th>Document</th><th class="num">Score</th><th>Matched on</th></tr>
+      ${r.results.map((x, i) => `<tr><td>${i + 1}</td><td><b>${x.id}</b> ${esc(x.title)}<div class="muted small">${esc(x.text)}</div></td>
+        <td class="num">${fmt(x.score, 3)}</td><td class="small">${x.matched_on.map(m => esc(m[0])).join(", ") || "–"}</td></tr>`).join("")}
+    </table></div>`;
+};
+
+/* ---------------- knowledge base + offline ---------------- */
+let kbLoaded = false;
+/* ---------------- analysis (RQ2 correlations + RQ3 failure coding) ---------------- */
+async function renderAnalysis() {
+  const el = $("t-analysis");
+  const a = await api("/api/admin/analysis");
+  if (!a.ready) { el.innerHTML = `<div class="card"><h2>No completed sessions yet</h2><p class="muted">Correlations and coding appear once participants finish.</p></div>`; return; }
+  const coded = a.items.filter(i => i.code).length;
+  el.innerHTML = `
+    <div class="card"><h2>RQ2: Spearman correlations (${a.participants} participants)</h2>
+      <div class="tbl"><table><tr><th>Pair</th><th>Level</th><th class="num">n</th><th class="num">ρ</th><th class="num">p</th><th>Reading</th></tr>
+        ${a.correlations.map(c => `<tr><td>${esc(c.pair)}</td><td>${c.level}</td><td class="num">${c.n}</td>
+          <td class="num">${c.rho == null ? "–" : fmt(c.rho, 2)}</td><td class="num">${c.p == null ? "–" : fmt(c.p, 3)}</td>
+          <td>${c.p != null && c.p < .05 ? `<span class="pill ok">${esc(c.reading)}</span>` : esc(c.reading)}</td></tr>`).join("")}
+      </table></div>
+      <p class="muted small">Ratings are ordinal and the sample is small, so Spearman's ρ is used. Run <code>python analysis.py</code> for the full report and figures.</p></div>
+    <div class="card"><h2>RQ3: code failed and rephrased queries</h2>
+      <p class="muted small"><span id="codedCount">${coded}</span> of ${a.items.length} coded. Each choice saves straight away to <code>results/coding.json</code>; <code>analysis.py</code> counts the codes per task.</p>
+      ${a.items.length ? `<div class="tbl"><table><tr><th>Participant</th><th>Task</th><th>Query</th><th>Document</th><th class="num">Rating</th><th>Code</th></tr>
+        ${a.items.map((i, ix) => `<tr><td><code>${i.participant_id}</code></td><td>${i.task_id}</td><td>${esc(i.query)}</td>
+          <td>${i.doc_id ?? "<span class='muted'>no answer</span>"}</td><td class="num">${i.relevance_rating ?? "–"}</td>
+          <td><select data-ix="${ix}" aria-label="Failure code for ${esc(i.query)}"><option value="">–</option>
+            ${a.codes.map(c => `<option${c === i.code ? " selected" : ""}>${esc(c)}</option>`).join("")}</select></td></tr>`).join("")}
+      </table></div>` : `<p class="muted">No failed or rephrased queries.</p>`}</div>`;
+  el.querySelectorAll("select[data-ix]").forEach(s => s.onchange = async () => {
+    const item = a.items[+s.dataset.ix];
+    const r = await api("/api/admin/code", {method: "POST", body: JSON.stringify({key: item.key, code: s.value})});
+    $("codedCount").textContent = r.coded;
+  });
+}
+
+async function renderKB() {
+  if (kbLoaded) return;
+  const [kb, off] = await Promise.all([api("/api/admin/kb"), api("/api/admin/offline")]);
+  const comp = off.test_comparison ? `<div class="card"><h2>Offline evaluation (Bitext, held-out test half)</h2><div class="tbl"><table>
+      <tr><th>Version</th><th class="num">Hit@1</th><th class="num">Hit@3</th><th class="num">MRR</th><th class="num">Out-of-scope refused</th></tr>
+      ${off.test_comparison.map(r => `<tr><td>${esc(r.version)}</td><td class="num">${fmt(r["hit@1"] * 100)}%</td><td class="num">${fmt(r["hit@3"] * 100)}%</td>
+        <td class="num">${fmt(r.MRR, 3)}</td><td class="num">${fmt(r.oos_correctly_refused * 100)}%</td></tr>`).join("")}
+    </table></div></div>` : `<div class="card"><p class="muted">No offline results yet. Run <code>python offline_eval.py bitext.csv --split test</code> and copy <code>test_comparison.csv</code> into <code>results/offline/</code>.</p></div>`;
+  $("t-kb").innerHTML = comp + `<div class="card"><h2>Knowledge base (${kb.length} documents)</h2><div class="tbl"><table>
+    <tr><th>ID</th><th>Topic</th><th>Document</th></tr>
+    ${kb.map(d => `<tr><td><code>${d.id}</code></td><td>${d.topic}</td><td><b>${esc(d.title)}</b><div>${esc(d.text)}</div>
+      ${d.keywords ? `<div class="kw">Hidden keywords: ${esc(d.keywords)}</div>` : ""}</td></tr>`).join("")}
+  </table></div></div>`;
+  kbLoaded = true;
+}
+
+/* ---------------- load ---------------- */
+async function load() {
+  try {
+    DATA = await api("/api/admin/summary");
+    showApp();
+    renderOverview(DATA); renderSessions(DATA); renderFeedback(DATA);
+    $("updated").textContent = "Updated " + new Date().toLocaleTimeString();
+  } catch (e) { if (e.message !== "login") console.error(e); }
+}
+load();
+setInterval(() => { if (!$("app").classList.contains("hidden") && $("drawer").classList.contains("hidden")) load(); }, 30000);
+</script>
+</body>
+</html>

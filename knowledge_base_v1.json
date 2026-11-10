@@ -1,0 +1,36 @@
+[
+  {"id": "RET01", "topic": "returns", "title": "Return window", "text": "You can return most items within 30 days of delivery for a full refund. Items must be in their original condition with all accessories and packaging."},
+  {"id": "RET02", "topic": "returns", "title": "How to start a return", "text": "To start a return, log in to your account, open My Orders, select the item and click Request Return. You will receive a prepaid returns label by email."},
+  {"id": "RET03", "topic": "returns", "title": "Returning faulty or poor quality items", "text": "If an item is faulty, damaged or not as described, you can return it free of charge within 30 days. Choose 'faulty item' as the return reason and describe the problem."},
+  {"id": "RET04", "topic": "returns", "title": "Refund timing", "text": "Refunds are processed within 5 to 7 working days after we receive your returned item. The money goes back to your original payment method."},
+  {"id": "RET05", "topic": "returns", "title": "Non-returnable items", "text": "Some items cannot be returned for hygiene reasons, including opened in-ear earbuds, personal care products and software with a broken seal."},
+  {"id": "RET06", "topic": "returns", "title": "Exchanges", "text": "If you would prefer a replacement instead of a refund, select Exchange when requesting a return. Exchanges are subject to stock availability."},
+
+  {"id": "SHP01", "topic": "shipping", "title": "Delivery options and costs", "text": "We offer Standard delivery in 3 to 5 working days for 3.99 pounds, Express delivery in 1 to 2 working days for 6.99 pounds, and Next Day delivery for 9.99 pounds."},
+  {"id": "SHP02", "topic": "shipping", "title": "Free delivery", "text": "Standard delivery is free on all orders over 50 pounds. Express and Next Day delivery are always charged."},
+  {"id": "SHP03", "topic": "shipping", "title": "Next day delivery cut-off", "text": "For Next Day delivery, place your order before 8pm Monday to Thursday. Orders placed after the cut-off or at the weekend arrive on the next available working day."},
+  {"id": "SHP04", "topic": "shipping", "title": "Urgent and gift orders", "text": "If you need an urgent gift delivered quickly, choose Next Day or Express at checkout. You can also add gift wrapping and a personal message for 2.50 pounds."},
+  {"id": "SHP05", "topic": "shipping", "title": "International shipping", "text": "We ship to selected countries in Europe. International delivery takes 5 to 10 working days and costs from 12.99 pounds depending on the destination."},
+  {"id": "SHP06", "topic": "shipping", "title": "Click and collect", "text": "Click and Collect is free. Your order will be ready to pick up from your chosen store within 2 working days."},
+
+  {"id": "DIS01", "topic": "discounts", "title": "Student discount", "text": "University and college students get 10 percent off full-price items. The student discount cannot be combined with other promotions."},
+  {"id": "DIS02", "topic": "discounts", "title": "How to verify student status", "text": "To claim the student discount, verify your status through UNiDAYS or Student Beans using your university email address. You will receive a unique code to use at checkout."},
+  {"id": "DIS03", "topic": "discounts", "title": "Using a discount code", "text": "Enter your discount or promo code in the box at checkout and click Apply. The discount will be shown before you pay."},
+  {"id": "DIS04", "topic": "discounts", "title": "Discount code not working", "text": "If your code is not working, check it has not expired, that your basket meets the minimum spend, and that the items are not already on sale."},
+  {"id": "DIS05", "topic": "discounts", "title": "Newsletter offer", "text": "Sign up to our newsletter to receive 5 percent off your first order and early access to seasonal sales."},
+  {"id": "DIS06", "topic": "discounts", "title": "Price match", "text": "We match prices from selected UK retailers on identical in-stock items. Contact customer service with a link to the cheaper offer."},
+
+  {"id": "WAR01", "topic": "warranty", "title": "Standard warranty", "text": "All electronics, including laptops, phones and tablets, come with a 12 month manufacturer warranty covering faults and defects from the date of purchase."},
+  {"id": "WAR02", "topic": "warranty", "title": "How to make a warranty claim", "text": "To make a warranty claim, contact customer support with your order number, a description of the fault and photos if possible. We will arrange a repair or replacement."},
+  {"id": "WAR03", "topic": "warranty", "title": "What the warranty does not cover", "text": "The warranty does not cover accidental damage, liquid damage, normal wear and tear, or devices that have been opened or repaired by a third party."},
+  {"id": "WAR04", "topic": "warranty", "title": "Device not turning on", "text": "If your laptop or device will not power on, try charging it for 30 minutes with the original charger and holding the power button for 15 seconds. If it still fails, it may be covered by warranty."},
+  {"id": "WAR05", "topic": "warranty", "title": "Extended warranty", "text": "You can buy an extended care plan that adds up to 2 extra years of cover, including accidental damage, within 30 days of purchase."},
+  {"id": "WAR06", "topic": "warranty", "title": "Repair times", "text": "Warranty repairs usually take 7 to 14 working days. We will email you updates and return the item free of charge."},
+
+  {"id": "ORD01", "topic": "tracking", "title": "Tracking your order", "text": "Once your order has been dispatched, you will receive a shipping confirmation email with a tracking link. You can also track it under My Orders in your account."},
+  {"id": "ORD02", "topic": "tracking", "title": "No shipping confirmation received", "text": "If you have not received a shipping confirmation within 3 working days, check your spam folder, then check the order status in My Orders. If it still shows processing, contact customer support with your order number."},
+  {"id": "ORD03", "topic": "tracking", "title": "Order status meanings", "text": "Processing means we are preparing your order. Dispatched means it has left our warehouse. Delivered means the courier has marked it as delivered."},
+  {"id": "ORD04", "topic": "tracking", "title": "Delayed orders", "text": "Orders can occasionally be delayed due to high demand or courier issues. If your order is more than 5 days late, contact us and we will investigate."},
+  {"id": "ORD05", "topic": "tracking", "title": "Cancelling an order", "text": "You can cancel an order free of charge as long as it has not been dispatched. Go to My Orders and click Cancel Order."},
+  {"id": "ORD06", "topic": "tracking", "title": "Contacting customer support", "text": "You can contact customer support by live chat or email, 9am to 6pm Monday to Saturday. Please have your order number ready."}
+]

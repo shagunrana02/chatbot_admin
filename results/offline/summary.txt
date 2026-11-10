@@ -1,0 +1,43 @@
+ChatAudit offline evaluation (without stemming)
+Dataset: bitext.csv  (26,872 queries, 26.7s total)
+
+IN-SCOPE queries (answer exists in knowledge base): 8,978
+  Hit@1 (right document first)       40.3%
+  Hit@3 (right document in top 3)    61.0%
+  MRR                                 0.498
+  Topic accuracy (right topic first)  50.0%
+  'Sorry, no answer' given            17.0%
+
+OUT-OF-SCOPE queries (no answer exists): 17,894
+  Correctly said 'no answer'          22.9%
+  Gave a wrong answer instead         77.1%
+
+Mean response time 0.96 ms (95th percentile 1.43 ms)
+
+Hit@1 by intent:
+                             n  hit_at_1  hit_at_3  topic_acc
+intent                                                       
+track_refund               998     0.045     0.202      0.147
+check_refund_policy        997     0.080     0.173      0.436
+contact_human_agent        999     0.260     0.531      0.361
+delivery_period            999     0.268     0.630      0.371
+delivery_options           995     0.470     0.667      0.470
+track_order                995     0.508     0.807      0.658
+contact_customer_service  1000     0.599     0.982      0.644
+get_refund                 997     0.656     0.697      0.670
+cancel_order               998     0.744     0.800      0.744
+
+Hit@1 by language variation (in-scope):
+flag                    variation    n  hit_at_1   mrr
+   Z                  typos/noise 1773     0.349 0.437
+   L lexical variation (synonyms) 7711     0.384 0.477
+   Q                   colloquial 3039     0.403 0.501
+   B                 basic syntax 8978     0.403 0.498
+   W                    offensive  406     0.416 0.498
+   E                abbreviations  533     0.443 0.542
+   I                interrogative 2822     0.450 0.547
+   P                       polite  443     0.451 0.544
+   C                  coordinated  889     0.465 0.564
+   K                 keyword-only  366     0.475 0.531
+   N                     negation  204     0.480 0.539
+   M      morphological variation 1103     0.513 0.576

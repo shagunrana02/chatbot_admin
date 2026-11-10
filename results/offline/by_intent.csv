@@ -1,0 +1,10 @@
+intent,n,hit_at_1,hit_at_3,mrr,topic_acc,no_answer
+track_refund,998,0.045,0.202,0.115,0.147,0.392
+check_refund_policy,997,0.08,0.173,0.12,0.436,0.131
+contact_human_agent,999,0.26,0.531,0.392,0.361,0.469
+delivery_period,999,0.268,0.63,0.431,0.371,0.123
+delivery_options,995,0.47,0.667,0.56,0.47,0.183
+track_order,995,0.508,0.807,0.634,0.658,0.015
+contact_customer_service,1000,0.599,0.982,0.78,0.644,0.007
+get_refund,997,0.656,0.697,0.673,0.67,0.205
+cancel_order,998,0.744,0.8,0.772,0.744,0.004

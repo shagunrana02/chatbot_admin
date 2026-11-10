@@ -1,0 +1,43 @@
+ChatAudit offline evaluation (without stemming)
+Dataset: bitext.csv  split=dev  kb=knowledge_base.json  domain_stop_words=True  (13,438 queries, 12.7s)
+
+IN-SCOPE queries (answer exists in knowledge base): 4,490
+  Hit@1 (right document first)       81.0%
+  Hit@3 (right document in top 3)    92.1%
+  MRR                                 0.864
+  Topic accuracy (right topic first)  83.7%
+  'Sorry, no answer' given             5.0%
+
+OUT-OF-SCOPE queries (no answer exists): 8,948
+  Correctly said 'no answer'          27.4%
+  Gave a wrong answer instead         72.6%
+
+Mean response time 0.92 ms (95th percentile 1.28 ms)
+
+Hit@1 by intent:
+                            n  hit_at_1  hit_at_3  topic_acc
+intent                                                      
+track_refund              499     0.639     1.000      0.737
+track_order               498     0.649     0.990      0.679
+delivery_options          498     0.797     0.809      0.797
+check_refund_policy       498     0.805     0.813      0.867
+get_refund                498     0.809     0.859      0.825
+contact_customer_service  500     0.848     0.984      0.848
+contact_human_agent       500     0.892     0.914      0.914
+cancel_order              499     0.922     0.928      0.922
+delivery_period           500     0.930     0.988      0.944
+
+Hit@1 by language variation (in-scope):
+flag                    variation    n  hit_at_1   mrr
+   N                     negation   98     0.663 0.735
+   K                 keyword-only  183     0.727 0.761
+   Z                  typos/noise  887     0.740 0.789
+   M      morphological variation  571     0.764 0.816
+   P                       polite  226     0.796 0.867
+   I                interrogative 1409     0.798 0.857
+   Q                   colloquial 1531     0.807 0.863
+   B                 basic syntax 4490     0.810 0.864
+   L lexical variation (synonyms) 3881     0.811 0.868
+   W                    offensive  203     0.833 0.901
+   C                  coordinated  442     0.846 0.902
+   E                abbreviations  260     0.850 0.901

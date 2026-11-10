@@ -1,0 +1,43 @@
+ChatAudit offline evaluation (without stemming)
+Dataset: bitext.csv  split=dev  kb=knowledge_base_v1.json  domain_stop_words=True  (13,438 queries, 13.1s)
+
+IN-SCOPE queries (answer exists in knowledge base): 4,490
+  Hit@1 (right document first)       41.6%
+  Hit@3 (right document in top 3)    59.2%
+  MRR                                 0.496
+  Topic accuracy (right topic first)  53.1%
+  'Sorry, no answer' given            23.3%
+
+OUT-OF-SCOPE queries (no answer exists): 8,948
+  Correctly said 'no answer'          30.0%
+  Gave a wrong answer instead         70.0%
+
+Mean response time 0.95 ms (95th percentile 1.44 ms)
+
+Hit@1 by intent:
+                            n  hit_at_1  hit_at_3  topic_acc
+intent                                                      
+track_refund              499     0.036     0.228      0.158
+check_refund_policy       498     0.147     0.221      0.653
+contact_human_agent       500     0.244     0.350      0.350
+track_order               498     0.333     0.749      0.558
+delivery_period           500     0.378     0.640      0.438
+delivery_options          498     0.500     0.677      0.500
+get_refund                498     0.643     0.685      0.659
+contact_customer_service  500     0.674     0.978      0.676
+cancel_order              499     0.788     0.800      0.788
+
+Hit@1 by language variation (in-scope):
+flag                    variation    n  hit_at_1   mrr
+   Z                  typos/noise  887     0.351 0.424
+   W                    offensive  203     0.389 0.475
+   L lexical variation (synonyms) 3881     0.392 0.469
+   Q                   colloquial 1531     0.410 0.492
+   B                 basic syntax 4490     0.416 0.496
+   P                       polite  226     0.420 0.516
+   E                abbreviations  260     0.442 0.515
+   K                 keyword-only  183     0.443 0.504
+   I                interrogative 1409     0.465 0.550
+   N                     negation   98     0.480 0.534
+   C                  coordinated  442     0.482 0.574
+   M      morphological variation  571     0.527 0.589

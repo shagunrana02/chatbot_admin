@@ -1,0 +1,3 @@
+version,in_scope_n,hit@1,hit@3,MRR,topic_acc,no_answer,oos_correctly_refused,mean_ms
+v1 baseline,4488,0.4073,0.6159,0.5028,0.504,0.1649,0.2321,0.9474
+v2 improved,4488,0.8079,0.9093,0.8568,0.8329,0.055,0.2727,0.9346

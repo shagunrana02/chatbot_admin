@@ -1,0 +1,10 @@
+intent,v1_hit@1,v2_hit@1
+cancel_order,0.743,0.914
+check_refund_policy,0.078,0.739
+contact_customer_service,0.574,0.876
+contact_human_agent,0.277,0.896
+delivery_options,0.469,0.761
+delivery_period,0.273,0.932
+get_refund,0.677,0.784
+track_order,0.521,0.648
+track_refund,0.054,0.721

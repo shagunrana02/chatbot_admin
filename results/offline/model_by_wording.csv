@@ -1,0 +1,49 @@
+model,knowledge_base,variation,n,hit_at_1
+TF-IDF,v1 (no keywords),colloquial,1508,45.2
+TF-IDF,v1 (no keywords),typos/noise,886,42.3
+TF-IDF,v1 (no keywords),keyword-only,183,49.2
+TF-IDF,v1 (no keywords),polite,217,52.5
+TF-IDF,v1 (no keywords),offensive,203,53.7
+TF-IDF,v1 (no keywords),morphological variation,532,52.4
+TF-IDF,v1 (no keywords),lexical variation (synonyms),3830,44.8
+TF-IDF,v1 (no keywords),basic syntax,4488,45.8
+TF-IDF,v1 (no keywords),interrogative,1413,50.3
+TF-IDF,v1 (no keywords),coordinated,447,53.0
+TF-IDF,v1 (no keywords),abbreviations,273,58.2
+TF-IDF,v1 (no keywords),negation,106,47.2
+TF-IDF,v2 (with keywords),colloquial,1508,82.5
+TF-IDF,v2 (with keywords),typos/noise,886,76.4
+TF-IDF,v2 (with keywords),keyword-only,183,67.8
+TF-IDF,v2 (with keywords),polite,217,83.4
+TF-IDF,v2 (with keywords),offensive,203,86.7
+TF-IDF,v2 (with keywords),morphological variation,532,75.8
+TF-IDF,v2 (with keywords),lexical variation (synonyms),3830,83.9
+TF-IDF,v2 (with keywords),basic syntax,4488,83.0
+TF-IDF,v2 (with keywords),interrogative,1413,83.5
+TF-IDF,v2 (with keywords),coordinated,447,88.4
+TF-IDF,v2 (with keywords),abbreviations,273,85.7
+TF-IDF,v2 (with keywords),negation,106,56.6
+BM25,v1 (no keywords),colloquial,1508,42.6
+BM25,v1 (no keywords),typos/noise,886,41.1
+BM25,v1 (no keywords),keyword-only,183,69.4
+BM25,v1 (no keywords),polite,217,47.9
+BM25,v1 (no keywords),offensive,203,45.3
+BM25,v1 (no keywords),morphological variation,532,65.0
+BM25,v1 (no keywords),lexical variation (synonyms),3830,42.0
+BM25,v1 (no keywords),basic syntax,4488,43.6
+BM25,v1 (no keywords),interrogative,1413,47.6
+BM25,v1 (no keywords),coordinated,447,47.7
+BM25,v1 (no keywords),abbreviations,273,49.1
+BM25,v1 (no keywords),negation,106,47.2
+BM25,v2 (with keywords),colloquial,1508,82.3
+BM25,v2 (with keywords),typos/noise,886,78.3
+BM25,v2 (with keywords),keyword-only,183,88.0
+BM25,v2 (with keywords),polite,217,82.9
+BM25,v2 (with keywords),offensive,203,87.2
+BM25,v2 (with keywords),morphological variation,532,86.1
+BM25,v2 (with keywords),lexical variation (synonyms),3830,84.0
+BM25,v2 (with keywords),basic syntax,4488,83.4
+BM25,v2 (with keywords),interrogative,1413,82.9
+BM25,v2 (with keywords),coordinated,447,87.5
+BM25,v2 (with keywords),abbreviations,273,86.8
+BM25,v2 (with keywords),negation,106,56.6

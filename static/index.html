@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatAudit Study</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --ink: #1c2430; --muted: #5d6878;
+    --line: #dde1e7; --accent: #1f3a5f; --accent-ink: #ffffff;
+    --bot: #eef2f7; --user: #1f3a5f; --user-ink: #fff; --ok: #1e7a4c; --warn: #9a3b2b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  header h1 { font-size: 20px; margin: 0; color: var(--accent); }
+  header small { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  h2 { font-size: 18px; margin: 0 0 8px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  button { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+           padding: 9px 18px; border-radius: 8px; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--accent); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  .progress { display: flex; gap: 6px; margin-bottom: 12px; }
+  .progress span { flex: 1; height: 6px; border-radius: 3px; background: var(--line); }
+  .progress span.done { background: var(--accent); }
+  .progress span.now { background: #7f97b8; }
+  .task-label { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .chat { display: flex; flex-direction: column; gap: 10px; min-height: 120px; max-height: 420px;
+          overflow-y: auto; padding: 4px 2px 8px; }
+  .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap; }
+  .msg.user { align-self: flex-end; background: var(--user); color: var(--user-ink); }
+  .msg.bot { align-self: flex-start; background: var(--bot); }
+  .rate { align-self: flex-start; font-size: 14px; color: var(--muted); }
+  .rate .scale { display: flex; gap: 6px; margin-top: 4px; align-items: center; flex-wrap: wrap; }
+  .rate button { padding: 4px 12px; background: transparent; color: var(--accent); }
+  .rate button.picked { background: var(--accent); color: #fff; }
+  .rated { font-size: 13px; color: var(--ok); }
+  form.ask { display: flex; gap: 8px; margin-top: 12px; }
+  form.ask input { flex: 1; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; }
+  .hint { font-size: 13px; color: var(--warn); min-height: 20px; margin-top: 6px; }
+  .done-box { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 14px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sus-item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .sus-item:last-child { border-bottom: 0; }
+  .likert { display: flex; gap: 6px; align-items: center; margin-top: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+  .likert label { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 2px 8px; }
+  textarea { width: 100%; min-height: 80px; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; }
+  label.q { display: block; font-weight: 600; margin: 14px 0 6px; }
+  .hidden { display: none; }
+  .pid { font-family: ui-monospace, monospace; font-size: 20px; letter-spacing: .05em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>ChatAudit Study</h1><small id="pidLabel"></small></header>
+
+  <!-- 1. Welcome / consent -->
+  <section id="s-welcome" class="card">
+    <h2>Welcome</h2>
+    <p>You will complete <strong>five short tasks</strong> using a customer support chatbot for an online store.
+       For each task, type your own question to the chatbot and rate how relevant each answer was.</p>
+    <p>Afterwards there is a short usability questionnaire and three open questions. It takes about 25–35 minutes.</p>
+    <p class="muted">No personal information is collected. You are identified only by a random code. You can stop at any time.</p>
+    <label><input type="checkbox" id="consent"> I have read the information sheet and signed the consent form.</label>
+    <div style="margin-top:16px"><button id="startBtn" disabled>Start the study</button></div>
+  </section>
+
+  <!-- 2. Tasks -->
+  <section id="s-task" class="hidden">
+    <div class="progress" id="progress"></div>
+    <div class="card">
+      <div class="task-label" id="taskLabel"></div>
+      <h2 id="taskTopic"></h2>
+      <p id="taskText"></p>
+      <p class="muted">Ask the chatbot in your own words. You can ask as many questions as you like.</p>
+    </div>
+    <div class="card">
+      <div class="chat" id="chat"></div>
+      <form class="ask" id="askForm">
+        <input id="askInput" autocomplete="off" placeholder="Type your question…">
+        <button id="askBtn">Send</button>
+      </form>
+      <div class="hint" id="hint"></div>
+      <div class="done-box hidden" id="doneBox">
+        <p><strong>Did you find the information you needed for this task?</strong></p>
+        <div class="row">
+          <button data-complete="1">Yes, I completed it</button>
+          <button class="ghost" data-complete="0">No, I couldn't find it</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SUS -->
+  <section id="s-sus" class="card hidden">
+    <h2>Usability questionnaire</h2>
+    <p class="muted">For each statement, choose how much you agree (1 = strongly disagree, 5 = strongly agree).</p>
+    <div id="susList"></div>
+    <div class="hint" id="susHint"></div>
+    <button id="susNext">Continue</button>
+  </section>
+
+  <!-- 4. Open feedback -->
+  <section id="s-feedback" class="card hidden">
+    <h2>Your feedback</h2>
+    <label class="q" for="fb1">What did you find helpful?</label>
+    <textarea id="fb1"></textarea>
+    <label class="q" for="fb2">What disappointed you?</label>
+    <textarea id="fb2"></textarea>
+    <label class="q" for="fb3">What would you change?</label>
+    <textarea id="fb3"></textarea>
+    <div style="margin-top:16px"><button id="finishBtn">Submit and finish</button></div>
+  </section>
+
+  <!-- 5. Thanks -->
+  <section id="s-thanks" class="card hidden">
+    <h2>Thank you!</h2>
+    <p>Your responses have been saved. Your participant code is:</p>
+    <p class="pid" id="finalPid"></p>
+    <p class="muted">Keep this code if you may want to withdraw your data later.</p>
+  </section>
+</div>
+
+<script>
+const SUS = [
+  "I think that I would like to use this system frequently.",
+  "I found the system unnecessarily complex.",
+  "I thought the system was easy to use.",
+  "I think that I would need the support of a technical person to be able to use this system.",
+  "I found the various functions in this system were well integrated.",
+  "I thought there was too much inconsistency in this system.",
+  "I would imagine that most people would learn to use this system very quickly.",
+  "I found the system very cumbersome to use.",
+  "I felt very confident using the system.",
+  "I needed to learn a lot of things before I could get going with this system."
+];
+let pid = null, tasks = [], taskIdx = 0, pendingRating = null, asked = 0;
+let CONFIG = {ask_trust: false};
+
+const $ = id => document.getElementById(id);
+const show = id => ["s-welcome","s-task","s-sus","s-feedback","s-thanks"]
+  .forEach(s => $(s).classList.toggle("hidden", s !== id));
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"},
+                                      body: JSON.stringify(body)} : {});
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+function setPid(p) {
+  pid = p;
+  $("pidLabel").textContent = "Participant " + p;
+  history.replaceState(null, "", "?pid=" + p);   // a refresh keeps the session
+}
+
+/* ---------- welcome ---------- */
+$("consent").onchange = e => $("startBtn").disabled = !e.target.checked;
+$("startBtn").onclick = async () => {
+  setPid((await api("/api/start", {})).participant_id);
+  taskIdx = 0; renderTask();
+};
+
+/* ---------- tasks ---------- */
+function renderTask() {
+  const t = tasks[taskIdx];
+  show("s-task");
+  $("progress").innerHTML = tasks.map((_, i) =>
+    `<span class="${i < taskIdx ? "done" : i === taskIdx ? "now" : ""}"></span>`).join("");
+  $("taskLabel").textContent = `Task ${taskIdx + 1} of ${tasks.length}`;
+  $("taskTopic").textContent = t.topic;
+  $("taskText").textContent = t.text;
+  api("/api/task_start", {participant_id: pid, task_id: t.id}).catch(() => {});
+  $("chat").innerHTML = ""; $("hint").textContent = "";
+  $("doneBox").classList.add("hidden");
+  pendingRating = null; asked = 0;
+  $("askInput").value = ""; $("askInput").focus();
+}
+
+function bubble(cls, text) {
+  const d = document.createElement("div");
+  d.className = "msg " + cls; d.textContent = text;
+  $("chat").appendChild(d); $("chat").scrollTop = $("chat").scrollHeight;
+  return d;
+}
+
+$("askForm").onsubmit = async e => {
+  e.preventDefault();
+  const q = $("askInput").value.trim();
+  if (!q) return;
+  if (pendingRating) { $("hint").textContent = "Please rate the last answer before asking again."; return; }
+  $("hint").textContent = ""; $("askBtn").disabled = true; $("askInput").value = "";
+  bubble("user", q);
+  const t0 = performance.now();
+  try {
+    const r = await api("/api/query", {participant_id: pid, task_id: tasks[taskIdx].id, query: q});
+    bubble("bot", r.response);
+    const clientMs = Math.round((performance.now() - t0) * 100) / 100;  // submit -> on screen
+    addRating(r.n, clientMs);
+  } catch (err) { $("hint").textContent = "Something went wrong — please tell the researcher."; }
+  $("askBtn").disabled = false;
+};
+
+function addRating(n, clientMs) {
+  pendingRating = n;
+  const box = document.createElement("div");
+  box.className = "rate";
+  box.innerHTML = `How relevant was this answer?
+    <div class="scale">Not at all ${[1,2,3,4,5].map(v => `<button type="button">${v}</button>`).join("")} Very</div>`;
+  const finish = (label) => {
+    box.innerHTML = `<span class="rated">${label}</span>`;
+    pendingRating = null; asked++;
+    $("hint").textContent = "";
+    $("doneBox").classList.remove("hidden");   // can finish once at least one answer is rated
+    $("chat").scrollTop = $("chat").scrollHeight;
+  };
+  box.querySelectorAll("button").forEach(b => b.onclick = async () => {
+    const rel = +b.textContent;
+    await api("/api/rate", {participant_id: pid, task_id: tasks[taskIdx].id, n,
+                            rating: rel, client_response_time_ms: clientMs});
+    if (!CONFIG.ask_trust) return finish(`Rated ${rel} / 5`);
+    // Optional second question (only when switched on in study_config.json)
+    box.innerHTML = `How much would you trust this answer?
+      <div class="scale">Not at all ${[1,2,3,4,5].map(v => `<button type="button">${v}</button>`).join("")} Completely</div>`;
+    box.querySelectorAll("button").forEach(t => t.onclick = async () => {
+      await api("/api/rate", {participant_id: pid, task_id: tasks[taskIdx].id, n, trust: +t.textContent});
+      finish(`Relevance ${rel} / 5 · Trust ${t.textContent} / 5`);
+    });
+  });
+  $("chat").appendChild(box); $("chat").scrollTop = $("chat").scrollHeight;
+}
+
+document.querySelectorAll("[data-complete]").forEach(b => b.onclick = async () => {
+  if (pendingRating) { $("hint").textContent = "Please rate the last answer first."; return; }
+  await api("/api/complete", {participant_id: pid, task_id: tasks[taskIdx].id,
+                              completed: b.dataset.complete === "1"});
+  taskIdx++;
+  taskIdx < tasks.length ? renderTask() : renderSus();
+});
+
+/* ---------- SUS ---------- */
+function renderSus() {
+  show("s-sus");
+  $("susList").innerHTML = SUS.map((s, i) => `
+    <div class="sus-item"><div>${i + 1}. ${s}</div>
+      <div class="likert">Strongly disagree
+        ${[1,2,3,4,5].map(v => `<label><input type="radio" name="sus${i}" value="${v}">${v}</label>`).join("")}
+      Strongly agree</div></div>`).join("");
+  window.scrollTo(0, 0);
+}
+$("susNext").onclick = () => {
+  const missing = SUS.map((_, i) => document.querySelector(`input[name=sus${i}]:checked`) ? null : i + 1).filter(Boolean);
+  if (missing.length) { $("susHint").textContent = "Please answer statement(s): " + missing.join(", "); return; }
+  show("s-feedback"); window.scrollTo(0, 0);
+};
+
+/* ---------- feedback ---------- */
+$("finishBtn").onclick = async () => {
+  $("finishBtn").disabled = true;
+  const sus = SUS.map((_, i) => +document.querySelector(`input[name=sus${i}]:checked`).value);
+  await api("/api/finish", {participant_id: pid, sus,
+    helpful: $("fb1").value, disappointed: $("fb2").value, would_change: $("fb3").value});
+  $("finalPid").textContent = pid; show("s-thanks");
+};
+
+/* ---------- boot (+ resume after refresh/crash) ---------- */
+(async () => {
+  tasks = await api("/api/tasks");
+  try { CONFIG = await api("/api/config"); } catch { /* older server: defaults */ }
+  const p = new URLSearchParams(location.search).get("pid");
+  if (!p) return;
+  try {
+    const s = await api("/api/session/" + p);
+    setPid(p);
+    if (s.status === "complete") { $("finalPid").textContent = p; return show("s-thanks"); }
+    const next = tasks.findIndex(t => s.tasks[t.id].completed === null);
+    if (next === -1) return renderSus();
+    taskIdx = next; renderTask();
+    $("hint").textContent = "Session resumed.";
+  } catch { /* unknown pid: stay on welcome */ }
+})();
+</script>
+</body>
+</html>
