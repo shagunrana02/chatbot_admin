@@ -1,0 +1,18 @@
+Typo-tolerant hybrid retriever (offline only; the study bot is unchanged)
+alpha=0.4, threshold=0.125 chosen on the dev half; results on the held-out test half (4,488 answerable questions).
+
+                     model                      condition  hit_at_1  mrr  refused_%
+   Study bot (word TF-IDF)                       original     82.84 0.87       5.44
+   Study bot (word TF-IDF)                 typos (seed 0)     70.39 0.75      11.92
+   Study bot (word TF-IDF)                 typos (seed 1)     71.59 0.76      11.63
+   Study bot (word TF-IDF)                 typos (seed 2)     70.03 0.75      11.81
+   Study bot (word TF-IDF) out-of-scope correctly refused       NaN  NaN      26.45
+Hybrid word + char n-grams                       original     86.12 0.89       3.77
+Hybrid word + char n-grams                 typos (seed 0)     76.58 0.82       8.80
+Hybrid word + char n-grams                 typos (seed 1)     77.07 0.82       8.87
+Hybrid word + char n-grams                 typos (seed 2)     76.67 0.82       9.05
+Hybrid word + char n-grams out-of-scope correctly refused       NaN  NaN      30.05
+
+Summary (Hit@1 %):
+  Study bot (word TF-IDF)        original 82.8   with typos 70.7 (SD 0.8)   typo cost 12.2 pts
+  Hybrid word + char n-grams     original 86.1   with typos 76.8 (SD 0.3)   typo cost 9.3 pts

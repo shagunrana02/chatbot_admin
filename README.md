@@ -2,6 +2,11 @@
 
 TF-IDF customer-support chatbot + user study platform with an admin dashboard.
 
+## Two apps
+- `python chat_app.py` → http://127.0.0.1:5051 – the full chatbot app: free chat, project dashboard,
+  knowledge base browser. Not part of the study; chats are logged to `logs/chat_log.jsonl`.
+- `python app.py` → http://127.0.0.1:5050 – the user-study app (tasks, ratings, SUS) and its admin dashboard at /admin.
+
 ## Setup (once)
     python3 -m venv venv
     source venv/bin/activate
@@ -55,6 +60,17 @@ Restart `app.py` after changing it.
   (embeddings are skipped if sentence-transformers is not installed); writes `results/offline/model_*.csv`
 - `python analysis.py` – after the study: per-task table, Spearman correlations, coding sheet,
   feedback and 5 figures for the dissertation in `results/analysis/`
+- `python perturbation_audit.py bitext.csv` – controlled typo/register/dialect audit (Harvey et al., 2025) with paired
+  tests, BH correction and answer-stability check; writes `results/audit/`
+- `python dialect_transform.py IN OUT` – Multi-VALUE dialect versions for the audit (separate Python 3.10 venv)
+- `python simulate_sessions.py` – dry run of the whole pipeline with synthetic participants (writes only to
+  `sessions_synthetic/` and `results_synthetic/`; delete both before the real study)
+- `python sus_report.py` – SUS confidence interval, test against 68, grade/adjective, item analysis; `results/sus/`
+- `python coding_agreement.py sample|compare FILE` – second-coder sample and Cohen's kappa for RQ3 coding
+- `python phrasing_analysis.py` – RQ3: failures by task, phrasing features vs rating, reformulation types
+- `python typo_tolerant.py bitext.csv` – offline v3 recommendation: word + character n-gram hybrid retriever
+- `PILOT_CHANGES.md` – knowledge-base refinements made before the study, with dev/test results
+- See `NEXT_STEPS.md` for the order to run everything in.
 - `python freeze_check.py` – records versions and file fingerprints in `SYSTEM_FREEZE.md`
 
 Everything runs locally on this laptop; no data leaves it. Back up `sessions/` after every session.

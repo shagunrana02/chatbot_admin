@@ -1,0 +1,11 @@
+model,condition,hit_at_1,mrr,refused_%
+Study bot (word TF-IDF),original,82.843,0.868,5.437
+Study bot (word TF-IDF),typos (seed 0),70.388,0.755,11.921
+Study bot (word TF-IDF),typos (seed 1),71.591,0.765,11.631
+Study bot (word TF-IDF),typos (seed 2),70.031,0.754,11.809
+Study bot (word TF-IDF),out-of-scope correctly refused,,,26.448
+Hybrid word + char n-grams,original,86.119,0.893,3.766
+Hybrid word + char n-grams,typos (seed 0),76.582,0.816,8.801
+Hybrid word + char n-grams,typos (seed 1),77.072,0.819,8.868
+Hybrid word + char n-grams,typos (seed 2),76.671,0.816,9.046
+Hybrid word + char n-grams,out-of-scope correctly refused,,,30.047

@@ -36,7 +36,15 @@ DOMAIN_STOP_WORDS = {
     "check", "checking", "see", "seeing", "know", "tell", "show", "try", "trying",
     "wish", "possible", "way", "ways", "info", "information", "please", "pls",
     "could", "would", "id", "im", "ive", "dont", "cant",
+    # Added after the pilot check: auxiliaries sklearn's list misses, and the
+    # fragments left when "isn't"/"doesn't" are split ("does" matched "does not cover").
+    "does", "did", "doing", "isn", "doesn", "don", "didn", "won", "aren", "wasn", "ll", "ve",
 }
+
+
+# Question words that DO signal intent in customer support ("where is my order"
+# = tracking), so the improved version keeps them (sklearn's list drops them).
+KEEP_WORDS = set()  # tried {"where"}: fixes "where is my order" but costs 0.8 pts on dev
 
 
 class Retriever:
@@ -46,7 +54,10 @@ class Retriever:
         # Index title + text + optional hidden keywords (synonyms users might type).
         # Only "text" is ever shown to participants.
         corpus = [f"{d['title']}. {d['text']} {d.get('keywords', '')}" for d in self.docs]
-        stops = list(ENGLISH_STOP_WORDS | (DOMAIN_STOP_WORDS if domain_stop_words else set()))
+        stops = ENGLISH_STOP_WORDS | (DOMAIN_STOP_WORDS if domain_stop_words else set())
+        if domain_stop_words:
+            stops = stops - KEEP_WORDS
+        stops = list(stops)
 
         if use_stemming:
             self.vectorizer = TfidfVectorizer(

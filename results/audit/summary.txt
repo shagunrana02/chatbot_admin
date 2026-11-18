@@ -1,0 +1,76 @@
+ChatAudit perturbation audit (method: Harvey, Kizilcec & Koenecke, 2025)
+1800 base questions, test split, no Bitext typo flag; 5 typo seeds; typo rate 0.15; models: TF-IDF (study bot), BM25
+
+Hit@1 by condition (%, mean over seeds; drop_pts = percentage points lost vs original wording;
+refused = 'Sorry, no answer'; answer_changed = top document differs from the original wording's)
+             model      condition  hit_at_1  hit_at_1_sd  drop_pts  refused  answer_changed
+              BM25       original      85.2          NaN       0.0      2.6             2.6
+              BM25      lowercase      85.2          NaN       0.0      2.6             2.6
+              BM25 no_punctuation      85.2          NaN       0.0      2.6             2.6
+              BM25         casual      85.2          NaN       0.0      2.6             2.6
+              BM25      textspeak      85.2          NaN       0.0      2.6             2.6
+              BM25 typo_duplicate      74.0          0.7      11.1      8.3            21.5
+              BM25      typo_omit      74.4          0.5      10.7      7.7            21.0
+              BM25 typo_transpose      74.0          0.7      11.2      8.1            21.0
+              BM25  typo_keyboard      74.1          0.8      11.1      8.0            21.4
+              BM25     typo_mixed      73.6          0.7      11.5      8.1            21.4
+TF-IDF (study bot)       original      84.5          NaN       0.0      4.4             4.4
+TF-IDF (study bot)      lowercase      84.5          NaN       0.0      4.4             4.4
+TF-IDF (study bot) no_punctuation      84.5          NaN       0.0      4.4             4.4
+TF-IDF (study bot)         casual      84.5          NaN       0.0      4.4             4.4
+TF-IDF (study bot)      textspeak      84.5          NaN       0.0      4.4             4.4
+TF-IDF (study bot) typo_duplicate      73.3          0.9      11.2      9.6            23.0
+TF-IDF (study bot)      typo_omit      73.6          0.2      10.9      9.1            22.6
+TF-IDF (study bot) typo_transpose      73.3          0.4      11.2      9.4            22.3
+TF-IDF (study bot)  typo_keyboard      73.4          0.5      11.1      9.4            22.9
+TF-IDF (study bot)     typo_mixed      72.8          0.5      11.7      9.4            22.8
+
+Paired tests vs original wording (same questions). McNemar exact on Hit@1, Wilcoxon on reciprocal rank;
+p-values Benjamini-Hochberg adjusted over all comparisons.
+             model      condition  lost_hit1  gained_hit1  p_mcnemar_bh  mean_rr_change  p_wilcoxon_bh
+              BM25      lowercase          0            0           1.0          0.0000            1.0
+              BM25 no_punctuation          0            0           1.0          0.0000            1.0
+              BM25         casual          0            0           1.0          0.0000            1.0
+              BM25      textspeak          0            0           1.0          0.0000            1.0
+              BM25 typo_duplicate        211           27           0.0         -0.1025            0.0
+              BM25      typo_omit        213           28           0.0         -0.1004            0.0
+              BM25 typo_transpose        225           25           0.0         -0.1035            0.0
+              BM25  typo_keyboard        241           26           0.0         -0.1028            0.0
+              BM25     typo_mixed        243           22           0.0         -0.1071            0.0
+TF-IDF (study bot)      lowercase          0            0           1.0          0.0000            1.0
+TF-IDF (study bot) no_punctuation          0            0           1.0          0.0000            1.0
+TF-IDF (study bot)         casual          0            0           1.0          0.0000            1.0
+TF-IDF (study bot)      textspeak          0            0           1.0          0.0000            1.0
+TF-IDF (study bot) typo_duplicate        228           42           0.0         -0.1021            0.0
+TF-IDF (study bot)      typo_omit        227           33           0.0         -0.0988            0.0
+TF-IDF (study bot) typo_transpose        231           32           0.0         -0.1020            0.0
+TF-IDF (study bot)  typo_keyboard        229           31           0.0         -0.1010            0.0
+TF-IDF (study bot)     typo_mixed        256           34           0.0         -0.1061            0.0
+
+Study bot: Hit@1 points lost per intent (largest typo effect = typo_mixed)
+                          original  drop_casual  drop_textspeak  drop_typo_mixed
+intent                                                                          
+delivery_period               97.5          0.0             0.0             18.3
+cancel_order                  93.0          0.0             0.0             17.1
+track_refund                  82.5          0.0             0.0             16.4
+delivery_options              85.5          0.0             0.0             14.6
+track_order                   68.5          0.0             0.0             11.3
+get_refund                    84.0          0.0             0.0             10.8
+contact_human_agent           92.5          0.0             0.0              8.8
+contact_customer_service      82.5          0.0             0.0              4.4
+check_refund_policy           74.5          0.0             0.0              3.4
+
+Answer stability of the study bot (all in-scope test questions, original wording):
+  identical answer on 5 repeats: 100.0% of questions (retrieval is deterministic, unlike the LLM chatbots in Uberti-Bona Marin et al., 2026)
+                  intent   n modal_answer  modal_share_%  modal_is_correct  distinct_answers  normalised_entropy
+            cancel_order 499        ORD05           91.8              True                 4               0.101
+     check_refund_policy 499        RET01           73.9              True                 6               0.253
+contact_customer_service 500        ORD06           87.6              True                 4               0.122
+     contact_human_agent 499        ORD06           92.8              True                 2               0.075
+        delivery_options 497        SHP01           56.1              True                 8               0.393
+         delivery_period 499        SHP03           84.8              True                12               0.208
+              get_refund 499        RET04           72.7              True                 8               0.277
+             track_order 497        ORD01           48.3              True                 6               0.334
+            track_refund 499        RET04           84.6              True                 5               0.176
+
+Figure: fig_audit.png

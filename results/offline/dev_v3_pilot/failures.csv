@@ -1,0 +1,201 @@
+intent,flags,query,top1,top1_score,answered
+track_order,BILQ,can ushow me the ETA of purchase,WAR05,0.1119,True
+delivery_options,BIQSZ,is it possible to ordet from,ORD06,0.0,False
+check_refund_policy,BILP,could you help me to see how long reimbursements take?,WAR06,0.1306,True
+delivery_options,BLS,shipping to,ORD02,0.1809,True
+delivery_options,BILQS,do uship to,ORD06,0.0,False
+track_order,BILQ,how can i check the status of purchase,WAR05,0.1317,True
+track_order,BLQ,i need assistance checking the ETA of the purchase,WAR05,0.1119,True
+contact_customer_service,BL,I want help speaking to customer service,DIS06,0.2788,True
+track_refund,BLMW,I need to check if there are any updates on my bloody rebate,WAR06,0.1308,True
+track_refund,BIL,where do I know if there is anything wrong with the refund?,RET01,0.1952,True
+contact_human_agent,BL,help me speaking to somebody,ORD06,0.0,False
+track_refund,BILM,can I see if there are any updates on my rebate?,WAR06,0.1308,True
+track_refund,BLM,I want to know if there are any news on my refund,RET01,0.1952,True
+contact_human_agent,BLQZ,i want help talking with an assistat,ORD06,0.0,False
+get_refund,BELQZ,i do not know how to receive a compensatin,DIS05,0.1575,True
+cancel_order,BLZ,I need help cancelnig purchase,WAR05,0.1681,True
+track_refund,BCL,"I have to check the reimbursement current status, help me",ORD01,0.1426,True
+track_order,BIL,where do I see the ETA of purchase  ?,WAR05,0.1119,True
+track_order,BLQ,need assistance to see the eta of purchase,WAR05,0.1119,True
+track_order,BKL,seeing status of purchase,WAR05,0.1317,True
+get_refund,BKLM,rebating,ORD06,0.0,False
+check_refund_policy,BL,I have to see in what situations can I request refunds,RET01,0.0882,False
+check_refund_policy,BIL,can you help me see how long refunds take?,RET04,0.1783,True
+track_refund,BLM,I have got to know if there are any updates on my rebate,WAR06,0.1308,True
+contact_human_agent,BLQ,want assistance talking to an assistant,ORD06,0.0,False
+track_order,BL,assistance to see purchase   status,WAR05,0.1317,True
+track_refund,BIL,what do I need to do to track my reimbursement?,ORD01,0.1837,True
+get_refund,BLM,I am trying to ask for rebates,ORD06,0.0,False
+track_refund,BQZ,i xepect a refund of,RET01,0.1952,True
+check_refund_policy,BKLQZ,show ur money back policcy,RET04,0.2308,True
+contact_customer_service,BL,I have to check at what time I can call customer service,DIS06,0.2383,True
+track_order,BL,I want to check the ETA of the purchase,WAR05,0.1119,True
+track_order,BIZ,where is order   ?,ORD05,0.2388,True
+get_refund,BLMQZ,i want help to ask for compensatiuons,ORD06,0.0,False
+track_order,BILQZ,can i see tye eta of purchase,WAR05,0.1119,True
+contact_customer_service,BQ,I'm trying to contact customer service,DIS06,0.3408,True
+track_order,BL,help me see purchase   status,WAR05,0.1317,True
+track_refund,BEL,I do not know what I need to do to track the restitution,ORD01,0.1676,True
+track_order,BLW,see purchase   goddamn status,WAR05,0.1317,True
+get_refund,BIL,can you help me requesting a reimbursement?,RET06,0.1264,True
+contact_customer_service,BQ,want help to contact customer service,DIS06,0.3408,True
+track_order,BKL,locating order,ORD05,0.2388,True
+track_refund,BL,I need to check the current status of the reimbursement,ORD01,0.1426,True
+get_refund,BLQZ,i want help requesting a reimbursement of moey,RET06,0.1264,True
+delivery_options,BISZ,is it possible to order from   ?,ORD05,0.2388,True
+track_refund,BLW,I need to track my fucking compensation,ORD01,0.1676,True
+get_refund,BKMZ,refunding    dollars,ORD06,0.0,False
+cancel_order,BLNQ,i can no longer afford purchase,WAR05,0.1681,True
+get_refund,BILMQ,can ya help me get reimbursements,ORD06,0.0,False
+track_refund,BL,assistance checking my reimbursement current status,ORD01,0.1426,True
+get_refund,BKLMZ,reimburse   dollar,ORD06,0.0,False
+delivery_options,BLSZ,shipnents to,ORD06,0.0,False
+contact_customer_service,BL,I want to see at what time customer service available is,DIS06,0.206,True
+track_refund,BILP,how could I track my restitution?,ORD01,0.1676,True
+contact_customer_service,BILZ,how do Ispeak with customer service?,DIS06,0.2788,True
+track_refund,BIL,can I see if there is anything new on the refund?,RET01,0.1952,True
+track_refund,BCL,"I want to track my rebate, I need assistance",ORD01,0.1676,True
+track_order,BCLQ,i have got to locate purchase   help me,WAR05,0.1119,True
+check_refund_policy,BLQ,need help seeing in which situations can I request refunds,RET01,0.0882,False
+track_order,BL,check purchase   status,WAR05,0.1317,True
+check_refund_policy,BLQ,check under what circumstances can i request refunds,RET01,0.0882,False
+track_order,BL,assistance to check the ETA of the purchase,WAR05,0.1119,True
+delivery_options,BLS,shipments to,ORD06,0.0,False
+check_refund_policy,BL,I am trying to see how long refunds usually take,WAR06,0.1754,True
+contact_customer_service,BL,help to call customer service,DIS06,0.2788,True
+contact_customer_service,BIMZ,what is the customer service workinghours?,DIS06,0.2788,True
+cancel_order,BLN,I don't want purchase,WAR05,0.1681,True
+check_refund_policy,BLQ,help checking in what cases can i request to be refunded,RET01,0.0882,False
+track_order,BLQ,i dont know how i can check the ETA of purchase,WAR05,0.1119,True
+contact_customer_service,BILQ,can ya show me at what time customer assistance available is,ORD06,0.096,False
+track_order,BILQZ,where is purechase,ORD06,0.0,False
+delivery_options,BLSZ,shipmetns to,ORD06,0.0,False
+check_refund_policy,BL,I need help to see in which situations can I request refunds,RET01,0.0882,False
+check_refund_policy,BL,help me to check in which cases can I request refunds,RET01,0.0882,False
+check_refund_policy,BCL,"I have got to see how long refunds take, I need help",RET04,0.1783,True
+check_refund_policy,BQ,i need assistance to check how long refunds take,RET04,0.1783,True
+track_order,BLQZ,want help seeing the eta of  purchase,WAR05,0.1119,True
+cancel_order,BELN,I cannot pay for purchase,DIS03,0.1161,True
+track_order,BLQ,i dont know how to check purchase   status,WAR05,0.1317,True
+check_refund_policy,BCLPQZ,I'd like to see how long refunds  take help me,RET04,0.1783,True
+track_order,BLQ,i dont know how to check the ETA of purchase,WAR05,0.1119,True
+track_order,BLQ,help checking the eta of purchase,WAR05,0.1119,True
+track_refund,BEL,I do not know how I can track my rebate,ORD01,0.1676,True
+contact_human_agent,BLQZ,i need assistance takling with an assistant,ORD06,0.0,False
+get_refund,BILMQZ,is it possible to obtaih rebates,ORD06,0.0,False
+contact_human_agent,BL,I want assistance chatting with someone,ORD06,0.0,False
+get_refund,BILMQWZ,where to receive goddamn reimbursements of mooney,DIS05,0.1575,True
+contact_customer_service,B,tell me at what time customer service available is,DIS06,0.206,True
+track_order,BL,help to check the ETA of purchase,WAR05,0.1119,True
+delivery_options,BILQS,do uship to,ORD06,0.0,False
+contact_human_agent,BLQZ,i need assistance talking with a perrson,ORD06,0.0,False
+delivery_options,BIQS,can i order from,ORD05,0.2388,True
+delivery_options,BIS,is it possible to order from  ?,ORD05,0.2388,True
+check_refund_policy,BCL,"I have to see how long reimbursements usually take, help me",WAR06,0.2264,True
+delivery_options,BIQS,is it possible to order from,ORD05,0.2388,True
+track_order,BLQ,want assistance seeing the ETA of purchase,WAR05,0.1119,True
+get_refund,BLMQW,i need help to receive fucking compensations,DIS05,0.1575,True
+contact_human_agent,BL,help me speaking to someone,ORD06,0.0,False
+track_refund,BIL,how can I track the compensation?,ORD01,0.1676,True
+check_refund_policy,BLW,I need to see in which cases can I request the damn refunds,RET01,0.0882,False
+contact_human_agent,BLZ,I want assistance seaking with someone,ORD06,0.0,False
+track_refund,BL,I need assistance tracking my reimbursement,ORD01,0.1837,True
+delivery_options,BIS,is it possible to order from  ?,ORD05,0.2388,True
+contact_customer_service,BIL,how can I check at what time I can call customer service?,DIS06,0.2383,True
+delivery_options,BLSZ,shiping to,ORD06,0.0,False
+get_refund,BILMZ,can you help me demand refunds ?,ORD04,0.1129,True
+contact_customer_service,B,check at what time I can contact customer service,DIS06,0.3053,True
+track_order,BLQ,want assistance locating purchase,WAR05,0.1681,True
+get_refund,BKLMZ,reimbusre,ORD06,0.0,False
+check_refund_policy,BL,I need to see how long reimbursements take,WAR06,0.1306,True
+track_refund,BILM,how do I check if there are any updates on the restitution?,WAR06,0.1308,True
+delivery_options,BLSZ,shiping to,ORD06,0.0,False
+track_order,BL,help me checking the ETA of purchase,WAR05,0.1119,True
+track_order,BL,I want assistance checking the ETA of purchase,WAR05,0.1119,True
+cancel_order,BLN,I can no longer afford purchase,WAR05,0.1681,True
+track_order,BKL,purchase   status,WAR05,0.1317,True
+delivery_period,BCLQZ,i have to see how long the delivery takesi need help,SHP02,0.22,True
+track_refund,BLM,I try to see if there are any news on the reimbursement,RET01,0.1244,True
+delivery_options,BISZ,do you edliver to  ?,ORD06,0.0,False
+check_refund_policy,BCIQ,need to check how long refunds take how can i do it,RET04,0.1783,True
+get_refund,BKMZ,refunding    dollars,ORD06,0.0,False
+contact_customer_service,BLZ,ucstomer service mail address,DIS06,0.1125,True
+contact_customer_service,BK,contact customer service,DIS06,0.3408,True
+check_refund_policy,BLZ,assistance seeing how olng refunds take,RET04,0.1456,True
+delivery_period,BILQ,what is the shipping period for this order,ORD02,0.1759,True
+track_order,BKZ,trackorder,ORD06,0.0,False
+check_refund_policy,BL,I try to see in what cases can I request refunds,RET01,0.0882,False
+delivery_options,BLSZ,hsipping to,ORD06,0.0,False
+get_refund,BLM,I have got to ask for reimbursements,ORD06,0.0,False
+track_order,BILQZ,how can i tfack purchase,WAR05,0.1681,True
+track_refund,BLM,any news on the refund,RET01,0.1952,True
+get_refund,BL,I try to demand a refund,ORD04,0.1274,True
+get_refund,BL,I don't know what I need to do to demand a rebate,ORD04,0.1129,True
+track_refund,BLWZ,I am waitig for a damn reimbursement of   dollars,RET01,0.1244,True
+delivery_period,BEL,I am trying to find shipping periods,ORD02,0.1809,True
+contact_customer_service,BILZ,can I check at what time I can call custoer assistance?,WAR06,0.1649,True
+delivery_options,BLS,shipments to,ORD06,0.0,False
+cancel_order,BLZ,I want help cancellkng purchase,WAR05,0.1681,True
+get_refund,BLM,I have got to demand reimbursements,ORD04,0.1596,True
+track_order,BLQ,want help to check the eta of purchase,WAR05,0.1119,True
+check_refund_policy,BLZ,assistance to check in what situations acn I request refunds,RET01,0.0882,False
+delivery_period,BCQZ,wanna know about delivery periods give me some informtion,SHP02,0.321,True
+track_refund,BELN,I cannot track the reimbursement,ORD01,0.1837,True
+track_order,BLQ,want help to see the status of purchase,WAR05,0.1317,True
+check_refund_policy,BL,help seeing in which cases can I request to be refunded,RET01,0.0882,False
+track_refund,BQZ,i xepect a refund of,RET01,0.1952,True
+track_refund,BCILP,"I would like to track my rebate, can you help me?",ORD01,0.1676,True
+cancel_order,BLN,I can't afford purchase,WAR05,0.1681,True
+track_order,BCLQWZ,i have to see the damn ETA of my delivery helpme,SHP02,0.1777,True
+check_refund_policy,BILQ,can uhelp me to see how long reimbursements usually take,WAR06,0.2264,True
+delivery_options,BIS,can I order from  ?,ORD05,0.2388,True
+check_refund_policy,BL,I want to see under what circumstances can I request refunds,RET01,0.0882,False
+delivery_options,BISZ,is it possible to order from   ?,ORD05,0.2388,True
+track_order,BELQZ,i do not know how i cancheck the eta of purchase,WAR05,0.1119,True
+get_refund,BILM,is it possible to receive reimbursements?,DIS05,0.1575,True
+delivery_period,BILZ,how can I see how son can I expect my package?,ORD01,0.1045,True
+contact_customer_service,BLQZ,need assistancetalking with customer service,DIS06,0.2788,True
+track_order,BLZ,I nerd to check the ETA of the purchase,WAR05,0.1119,True
+track_order,BCILPQ,wanna locate purchase   how could i do it,WAR05,0.1119,True
+track_order,BILQ,can i check purchase   status,WAR05,0.1317,True
+delivery_options,BLSZ,hsipping to,ORD06,0.0,False
+delivery_options,BIQSZ,can i order frrom,ORD05,0.2388,True
+track_refund,BCILP,"I need to track my compensation, could I get some help?",ORD01,0.1676,True
+cancel_order,BELN,I cannot afford purchase,WAR05,0.1681,True
+track_order,BLQZ,i want help seeing theeta of purchase,WAR05,0.1681,True
+get_refund,BLMQZ,i have got to ask for reabtes,ORD06,0.0,False
+delivery_options,BLS,shipping to,ORD02,0.1809,True
+delivery_options,BISZ,is it plssible to order from  ?,ORD05,0.2388,True
+check_refund_policy,BL,I have to see in which cases can I request to be refunded,RET01,0.0882,False
+check_refund_policy,BLQ,i want help to check in what cases can i request refunds,RET01,0.0882,False
+check_refund_policy,B,I want assistance checking how long refunds usually take,WAR06,0.1754,True
+track_refund,BILM,how do I check if there are any updates on my rebate?,WAR06,0.1308,True
+track_refund,BM,I need help checking if there are any updates on my refund,WAR06,0.1476,True
+track_order,BELNQZ,i cannot see the current staus of purchase,WAR05,0.1119,True
+get_refund,BLM,I don't know how I can receive compensations,DIS05,0.1575,True
+track_refund,BLMZ,help me to check if there are nay news on the refund,RET01,0.1952,True
+delivery_options,BS,deliveries to,ORD06,0.0,False
+check_refund_policy,BL,I try to see in what situations can I request to be refunded,RET01,0.0882,False
+track_order,BLQZ,need heop seeing the ETA of the purchase,WAR05,0.1119,True
+track_refund,BLM,I need help to see if there are any updates on my rebate,WAR06,0.1308,True
+track_order,BLZ,show me purchase   statud,WAR05,0.1681,True
+track_order,BLQZ,I'm tying to see the ETA of purchase,WAR05,0.1119,True
+get_refund,BELMQ,i do not know how to demand refunds,ORD04,0.1129,True
+track_order,BL,I have to check the ETA of the purchase,WAR05,0.1119,True
+check_refund_policy,BL,show me in what situations can I request refunds,RET01,0.0882,False
+track_order,BL,help me see the status of purchase,WAR05,0.1317,True
+track_refund,BELNQ,i cannot track my restitution,ORD01,0.1676,True
+check_refund_policy,BLQZ,assistance seeing in what casew can i ask to be refunded,RET04,0.1456,True
+check_refund_policy,BL,I need help seeing how long refunds usually take,WAR06,0.1754,True
+contact_customer_service,BI,can you show me at what time I can contact customer service?,DIS06,0.3053,True
+track_refund,BILMQ,where can i see if there are any news on the reimbursement,RET01,0.1244,True
+delivery_period,BLMZ,give me information about the shippong periods,ORD06,0.0,False
+contact_customer_service,BILZ,were to see at what time I can contact customer service?,DIS06,0.3053,True
+get_refund,BKLM,rebating   dollars,ORD06,0.0,False
+track_order,BL,assistance checking the ETA of the purchase,WAR05,0.1119,True
+check_refund_policy,BL,help me seeing how long refunds take,RET04,0.1783,True
+track_refund,BQZ,i expecdt a refund of   dollars,RET01,0.1952,True
+contact_customer_service,BL,I want assistance to call customer service,DIS06,0.2788,True
+track_refund,BILP,where could I see if there is anything new on my refund?,RET01,0.1952,True
+track_order,BLQ,need to see purchase   status,WAR05,0.1317,True

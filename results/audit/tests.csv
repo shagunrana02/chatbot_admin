@@ -1,0 +1,19 @@
+model,condition,n,lost_hit1,gained_hit1,p_mcnemar,mean_rr_change,p_wilcoxon_rr,p_mcnemar_bh,p_wilcoxon_bh,significant_bh_.05
+BM25,lowercase,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+BM25,no_punctuation,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+BM25,casual,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+BM25,textspeak,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+BM25,typo_duplicate,1800,211,27,0.0,-0.1025,0.0,0.0,0.0,True
+BM25,typo_omit,1800,213,28,0.0,-0.10037,0.0,0.0,0.0,True
+BM25,typo_transpose,1800,225,25,0.0,-0.1035,0.0,0.0,0.0,True
+BM25,typo_keyboard,1800,241,26,0.0,-0.1028,0.0,0.0,0.0,True
+BM25,typo_mixed,1800,243,22,0.0,-0.10706,0.0,0.0,0.0,True
+TF-IDF (study bot),lowercase,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+TF-IDF (study bot),no_punctuation,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+TF-IDF (study bot),casual,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+TF-IDF (study bot),textspeak,1800,0,0,1.0,0.0,1.0,1.0,1.0,False
+TF-IDF (study bot),typo_duplicate,1800,228,42,0.0,-0.10215,0.0,0.0,0.0,True
+TF-IDF (study bot),typo_omit,1800,227,33,0.0,-0.09876,0.0,0.0,0.0,True
+TF-IDF (study bot),typo_transpose,1800,231,32,0.0,-0.10198,0.0,0.0,0.0,True
+TF-IDF (study bot),typo_keyboard,1800,229,31,0.0,-0.10102,0.0,0.0,0.0,True
+TF-IDF (study bot),typo_mixed,1800,256,34,0.0,-0.10613,0.0,0.0,0.0,True

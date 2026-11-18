@@ -1,0 +1,10 @@
+intent,n,repeat_identical_%,modal_answer,modal_share_%,modal_is_correct,distinct_answers,normalised_entropy
+cancel_order,499,100.0,ORD05,91.8,True,4,0.101
+check_refund_policy,499,100.0,RET01,73.9,True,6,0.253
+contact_customer_service,500,100.0,ORD06,87.6,True,4,0.122
+contact_human_agent,499,100.0,ORD06,92.8,True,2,0.075
+delivery_options,497,100.0,SHP01,56.1,True,8,0.393
+delivery_period,499,100.0,SHP03,84.8,True,12,0.208
+get_refund,499,100.0,RET04,72.7,True,8,0.277
+track_order,497,100.0,ORD01,48.3,True,6,0.334
+track_refund,499,100.0,RET04,84.6,True,5,0.176

@@ -11,7 +11,7 @@
     "topic": "returns",
     "title": "How to start a return",
     "text": "To start a return, log in to your account, open My Orders, select the item and click Request Return. You will receive a prepaid returns label by email.",
-    "keywords": "return send back sent back returning start a return how to return"
+    "keywords": "return send back sent back returning start a return how to return return an item return item return items return product return my how do i return"
   },
   {
     "id": "RET03",
@@ -46,7 +46,7 @@
     "topic": "shipping",
     "title": "Delivery options and costs",
     "text": "We offer Standard delivery in 3 to 5 working days for 3.99 pounds, Express delivery in 1 to 2 working days for 6.99 pounds, and Next Day delivery for 9.99 pounds.",
-    "keywords": "shipping methods shipment options delivery methods deliver ship how fast how soon how long arrive arrival time period days cost price"
+    "keywords": "shipping methods shipment options delivery methods deliver ship how fast how soon how long arrive arrival time period days cost price prices speeds speed shipping cost shipping price how much fastest express standard"
   },
   {
     "id": "SHP02",
@@ -108,7 +108,8 @@
     "id": "DIS04",
     "topic": "discounts",
     "title": "Discount code not working",
-    "text": "If your code is not working, check it has not expired, that your basket meets the minimum spend, and that the items are not already on sale."
+    "text": "If your code is not working, check it has not expired, that your basket meets the minimum spend, and that the items are not already on sale.",
+    "keywords": "not working doesn't work invalid rejected error declined won't apply problem code failed"
   },
   {
     "id": "DIS05",
@@ -140,7 +141,8 @@
     "id": "WAR03",
     "topic": "warranty",
     "title": "What the warranty does not cover",
-    "text": "The warranty does not cover accidental damage, liquid damage, normal wear and tear, or devices that have been opened or repaired by a third party."
+    "text": "The warranty does not cover accidental damage, liquid damage, normal wear and tear, or devices that have been opened or repaired by a third party.",
+    "keywords": "not covered exclusions excluded damage"
   },
   {
     "id": "WAR04",
@@ -159,14 +161,15 @@
     "id": "WAR06",
     "topic": "warranty",
     "title": "Repair times",
-    "text": "Warranty repairs usually take 7 to 14 working days. We will email you updates and return the item free of charge."
+    "text": "Warranty repairs usually take 7 to 14 working days. We will email you updates and return the item free of charge.",
+    "keywords": "repair time how long repair"
   },
   {
     "id": "ORD01",
     "topic": "tracking",
     "title": "Tracking your order",
     "text": "Once your order has been dispatched, you will receive a shipping confirmation email with a tracking link. You can also track it under My Orders in your account.",
-    "keywords": "track order where is my order locate status eta estimated arrival shipment parcel package current location"
+    "keywords": "track order where is my order locate status eta estimated arrival shipment parcel package current location where is my order my order order"
   },
   {
     "id": "ORD02",

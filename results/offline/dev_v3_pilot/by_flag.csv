@@ -1,0 +1,13 @@
+flag,variation,n,hit_at_1,mrr
+N,negation,98,0.663,0.724
+K,keyword-only,183,0.732,0.764
+Z,typos/noise,887,0.743,0.789
+M,morphological variation,571,0.765,0.819
+I,interrogative,1409,0.814,0.865
+Q,colloquial,1531,0.817,0.867
+B,basic syntax,4490,0.826,0.872
+L,lexical variation (synonyms),3881,0.829,0.878
+P,polite,226,0.832,0.888
+W,offensive,203,0.857,0.913
+C,coordinated,442,0.857,0.91
+E,abbreviations,260,0.865,0.913

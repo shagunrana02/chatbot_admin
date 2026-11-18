@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatAudit</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #fff; --ink: #1c2430; --muted: #5d6878; --line: #dde1e7;
+    --accent: #1f3a5f; --accent-2: #7f97b8; --bot: #eef2f7; --ok: #1e7a4c; --warn: #9a3b2b; --mid: #a26a12;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; display: flex; min-height: 100vh; }
+  nav { width: 220px; background: var(--accent); color: #fff; padding: 22px 14px; flex-shrink: 0;
+        display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100vh; }
+  nav h1 { font-size: 19px; margin: 0 8px 4px; }
+  nav .sub { font-size: 12px; opacity: .7; margin: 0 8px 22px; }
+  nav button { all: unset; cursor: pointer; padding: 9px 12px; border-radius: 8px; font-size: 15px; }
+  nav button:hover { background: rgba(255,255,255,.08); }
+  nav button.on { background: rgba(255,255,255,.16); font-weight: 600; }
+  nav .foot { margin-top: auto; font-size: 12px; opacity: .65; padding: 0 8px; }
+  main { flex: 1; padding: 28px 32px 48px; max-width: 1100px; }
+  section { display: none; } section.on { display: block; }
+  h2 { font-size: 22px; margin: 0 0 4px; } .lead { color: var(--muted); margin: 0 0 20px; }
+  h3 { font-size: 15px; margin: 0 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  button.btn { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: #fff;
+               padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--accent); }
+
+  /* chat */
+  .chatbox { display: flex; flex-direction: column; height: calc(100vh - 170px); min-height: 420px; padding: 0; }
+  .log { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: 78%; padding: 11px 15px; border-radius: 14px; white-space: pre-wrap; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+  .bot { align-self: flex-start; max-width: 78%; }
+  .bot .msg { max-width: 100%; background: var(--bot); border-bottom-left-radius: 4px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+  .pill { border-radius: 99px; padding: 1px 9px; font-size: 12px; font-weight: 600; border: 1px solid; }
+  .pill.high { color: var(--ok); } .pill.medium { color: var(--mid); } .pill.low, .pill.none { color: var(--warn); }
+  .fb button { all: unset; cursor: pointer; padding: 1px 7px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; }
+  .fb button.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+  details { margin-top: 6px; font-size: 13px; } summary { cursor: pointer; color: var(--accent); }
+  .alt { border-left: 3px solid var(--line); padding: 4px 10px; margin: 6px 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px 12px; }
+  .chips button { all: unset; cursor: pointer; border: 1px solid var(--line); background: #fff; border-radius: 99px;
+                  padding: 5px 12px; font-size: 13px; color: var(--accent); }
+  .chips button:hover { border-color: var(--accent); }
+  form.ask { display: flex; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); }
+  form.ask input { flex: 1; font: inherit; padding: 11px 14px; border: 1px solid var(--line); border-radius: 8px; }
+  form.ask input:focus { outline: 2px solid var(--accent-2); border-color: transparent; }
+  .welcome { color: var(--muted); text-align: center; margin: auto; max-width: 420px; }
+
+  /* dashboard */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .tile .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .tile .l { font-size: 13px; color: var(--muted); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; }
+  .bar { display: grid; grid-template-columns: 150px 1fr 54px; gap: 10px; align-items: center; margin: 7px 0; font-size: 13px; }
+  .bar .track { background: var(--bot); border-radius: 4px; height: 14px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--accent); border-radius: 4px; }
+  .bar .fill.alt2 { background: var(--accent-2); }
+  .bar .num { text-align: right; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .empty { color: var(--muted); font-size: 13px; }
+
+  /* kb */
+  .search { width: 100%; font: inherit; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 16px; }
+  .doc { padding: 14px 0; border-bottom: 1px solid var(--line); } .doc:last-child { border: 0; }
+  .doc b { display: block; } .tag { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  a { color: var(--accent); }
+  @media (max-width: 760px) { body { flex-direction: column; } nav { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; }
+    nav .sub, nav .foot { display: none; } main { padding: 18px; } .msg, .bot { max-width: 92%; } }
+</style>
+</head>
+<body>
+<nav>
+  <h1>ChatAudit</h1>
+  <div class="sub">Customer support chatbot</div>
+  <button data-p="chat" class="on">💬 Chat</button>
+  <button data-p="dash">📊 Dashboard</button>
+  <button data-p="kb">📚 Knowledge base</button>
+  <button data-p="study">🧪 User study</button>
+  <div class="foot">Runs locally · TF-IDF retrieval<br>Chats saved to logs/chat_log.jsonl</div>
+</nav>
+<main>
+  <!-- CHAT -->
+  <section id="chat" class="on">
+    <h2>Chat</h2>
+    <p class="lead">Ask about returns, shipping, discounts, warranty or your order.</p>
+    <div class="card chatbox">
+      <div class="log" id="log"><div class="welcome" id="welcome">👋 Hi! I'm the store's support assistant.<br>Type a question below or pick one to start.</div></div>
+      <div class="chips" id="chips"></div>
+      <form class="ask" id="ask"><input id="q" placeholder="Type your question…" autocomplete="off" autofocus>
+        <button class="btn">Send</button><button type="button" class="btn ghost" id="clear" title="Clear chat">Clear</button></form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dash">
+    <h2>Dashboard</h2>
+    <p class="lead">Everything about the project in one place. <a href="#" id="refresh">Refresh</a></p>
+    <div class="tiles" id="tiles"></div>
+    <div class="grid2">
+      <div class="card"><h3>Chat questions by topic</h3><div id="topics"></div></div>
+      <div class="card"><h3>Most-used answers</h3><div id="topdocs"></div></div>
+      <div class="card"><h3>Offline test: v1 baseline vs v2 improved (Hit@1, %)</h3><div id="offline"></div>
+        <p class="muted">Bitext held-out test half, 4,488 answerable questions.</p></div>
+      <div class="card"><h3>Retrieval models (Hit@1, %)</h3><div id="models"></div></div>
+      <div class="card"><h3>Perturbation audit: study bot Hit@1 by wording (%)</h3><div id="audit"></div>
+        <p class="muted">Same 1,800 questions reworded. Run <code>python perturbation_audit.py bitext.csv</code> to update.</p></div>
+      <div class="card"><h3>Recent questions</h3><div id="recent"></div></div>
+    </div>
+    <div class="card"><h3>Answers marked not helpful (to improve the knowledge base)</h3><div id="unhelpful"></div></div>
+  </section>
+
+  <!-- KB -->
+  <section id="kb">
+    <h2>Knowledge base</h2>
+    <p class="lead">All documents the chatbot can answer from.</p>
+    <input class="search" id="kbq" placeholder="Search documents…">
+    <div class="card" id="docs"></div>
+  </section>
+
+  <!-- STUDY -->
+  <section id="study">
+    <h2>User study</h2>
+    <p class="lead">The study runs in a separate app so its data stays clean. Start it with <code>python app.py</code> (or the START launcher).</p>
+    <div class="tiles" id="studytiles"></div>
+    <div class="card">
+      <p><a href="http://127.0.0.1:5050" target="_blank">Participant page →</a> <span class="muted">give this to each participant (5 tasks, ratings, SUS questionnaire)</span></p>
+      <p><a href="http://127.0.0.1:5050/admin" target="_blank">Study admin dashboard →</a> <span class="muted">metrics vs targets, sessions, feedback, analysis, export</span></p>
+      <p class="muted">Links work only while app.py is running. Chats on this page are never added to the study data.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const api = (u, body) => fetch(u, body ? {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)} : {})
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+
+// navigation
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.p));
+function show(p) {
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.p === p));
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === p));
+  if (p === "dash" || p === "study") loadDash();
+  if (p === "kb" && !$("#docs").dataset.loaded) loadKb();
+  if (p === "chat") $("#q").focus();
+}
+
+// chat
+const log = $("#log");
+api("/api/suggestions").then(s => $("#chips").innerHTML = s.map(x => `<button>${esc(x)}</button>`).join(""));
+$("#chips").onclick = e => { if (e.target.tagName === "BUTTON") send(e.target.textContent); };
+$("#ask").onsubmit = e => { e.preventDefault(); send($("#q").value); };
+$("#clear").onclick = () => { log.innerHTML = ""; $("#q").focus(); };
+
+function add(html, cls) { const d = document.createElement("div"); d.className = cls; d.innerHTML = html; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+
+async function send(text) {
+  text = text.trim(); if (!text) return;
+  $("#welcome")?.remove(); $("#q").value = "";
+  add(esc(text), "msg user");
+  const wait = add(`<div class="msg">…</div>`, "bot");
+  try {
+    const r = await api("/api/chat", {message: text});
+    const label = {high: "High confidence", medium: "Medium confidence", low: "Low confidence", none: "No match"}[r.confidence];
+    wait.innerHTML = `<div class="msg">${esc(r.response)}</div>
+      <div class="meta">
+        ${r.doc ? `<span>📄 ${esc(r.doc.title)} · ${esc(r.doc.topic)}</span>` : ""}
+        <span class="pill ${r.confidence}">${label}</span>
+        <span>${r.response_time_ms} ms</span>
+        <span class="fb">Helpful? <button data-v="1">👍</button> <button data-v="0">👎</button></span>
+      </div>
+      ${r.matched.length ? `<div class="meta">Matched on: ${r.matched.map(esc).join(", ")}</div>` : ""}
+      ${r.alternatives.length ? `<details><summary>Not what you meant? Other possible answers (${r.alternatives.length})</summary>
+        ${r.alternatives.map(a => `<div class="alt"><b>${esc(a.title)}</b> <span class="muted">score ${a.score}</span><br>${esc(a.text)}</div>`).join("")}</details>` : ""}`;
+    wait.querySelectorAll(".fb button").forEach(b => b.onclick = () => {
+      wait.querySelectorAll(".fb button").forEach(x => x.classList.remove("sel")); b.classList.add("sel");
+      api("/api/feedback", {id: r.id, helpful: b.dataset.v === "1"});
+    });
+  } catch { wait.innerHTML = `<div class="msg">Something went wrong. Is chat_app.py still running?</div>`; }
+  log.scrollTop = log.scrollHeight;
+}
+
+// dashboard
+$("#refresh").onclick = e => { e.preventDefault(); loadDash(); };
+const bars = (rows, max = 100, cls = "") => rows.length ? rows.map(([l, v, c]) =>
+  `<div class="bar"><span>${esc(l)}</span><div class="track"><div class="fill ${c || cls}" style="width:${Math.max(0, 100 * v / max)}%"></div></div><span class="num">${typeof v === "number" ? (Number.isInteger(v) ? v : v.toFixed(1)) : v}</span></div>`).join("")
+  : `<p class="empty">No data yet.</p>`;
+const tile = (v, l) => `<div class="tile"><div class="v">${v ?? "–"}</div><div class="l">${l}</div></div>`;
+
+async function loadDash() {
+  const d = await api("/api/dashboard"), u = d.usage;
+  $("#tiles").innerHTML = tile(u.queries, "questions asked here") + tile(u.answered_pct != null ? u.answered_pct + "%" : null, "answered (not 'sorry')")
+    + tile(u.helpful_pct != null ? u.helpful_pct + "%" : null, `marked helpful (${u.rated} rated)`) + tile(u.mean_ms != null ? u.mean_ms + " ms" : null, "mean response time")
+    + tile(d.kb.docs, `documents in ${Object.keys(d.kb.topics).length} topics`) + tile(d.study.completed, "study participants completed");
+  const maxT = Math.max(1, ...u.by_topic.map(x => x[1]));
+  $("#topics").innerHTML = bars(u.by_topic.map(([t, n]) => [t, n, t === "no answer" ? "alt2" : ""]), maxT);
+  $("#topdocs").innerHTML = bars(u.top_docs.map(x => [x.title, x.n]), Math.max(1, ...u.top_docs.map(x => x.n)));
+  $("#offline").innerHTML = bars(d.offline.map(r => [r.version, 100 * r["hit@1"], r.version.startsWith("v1") ? "alt2" : ""]));
+  $("#models").innerHTML = bars(d.models.map(r => [`${r.model} ${r.knowledge_base.split(" ")[0]}`, r.hit_at_1, r.knowledge_base.startsWith("v1") ? "alt2" : ""]));
+  $("#audit").innerHTML = bars(d.audit.map(r => [r.condition.replace("_", " "), r.hit_at_1, r.condition.startsWith("typo") ? "alt2" : ""]));
+  $("#recent").innerHTML = u.recent.length ? `<table><tr><th>Question</th><th>Answer</th><th>Conf.</th><th></th></tr>${u.recent.map(r =>
+    `<tr><td>${esc(r.query)}</td><td>${esc(r.doc_id || "—")}</td><td>${esc(r.confidence)}</td><td>${r.helpful === true ? "👍" : r.helpful === false ? "👎" : ""}</td></tr>`).join("")}</table>` : `<p class="empty">Ask something in Chat first.</p>`;
+  $("#unhelpful").innerHTML = u.unhelpful.length ? `<table><tr><th>Question</th><th>Answer given</th></tr>${u.unhelpful.map(r =>
+    `<tr><td>${esc(r.query)}</td><td>${esc(r.doc_id || "no answer")}</td></tr>`).join("")}</table>` : `<p class="empty">None so far.</p>`;
+  $("#studytiles").innerHTML = tile(d.study.completed, "completed sessions") + tile(d.study.in_progress, "in progress / abandoned");
+}
+
+// knowledge base
+let DOCS = [];
+async function loadKb() { DOCS = await api("/api/kb"); $("#docs").dataset.loaded = 1; renderKb(); }
+$("#kbq").oninput = renderKb;
+function renderKb() {
+  const q = $("#kbq").value.toLowerCase();
+  const hits = DOCS.filter(d => !q || (d.title + d.text + d.topic).toLowerCase().includes(q));
+  $("#docs").innerHTML = hits.length ? hits.map(d => `<div class="doc"><span class="tag">${esc(d.topic)} · ${esc(d.id)}</span><b>${esc(d.title)}</b>${esc(d.text)}</div>`).join("") : `<p class="empty">No documents match.</p>`;
+}
+</script>
+</body>
+</html>

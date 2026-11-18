@@ -1,0 +1,21 @@
+model,condition,hit_at_1,hit_at_1_sd,mrr,refused,answer_changed,seeds,drop_pts,relative_drop_%
+BM25,original,85.167,,0.898,2.556,2.556,1,0.0,0.0
+BM25,lowercase,85.167,,0.898,2.556,2.556,1,0.0,0.0
+BM25,no_punctuation,85.167,,0.898,2.556,2.556,1,0.0,0.0
+BM25,casual,85.167,,0.898,2.556,2.556,1,0.0,0.0
+BM25,textspeak,85.167,,0.898,2.556,2.556,1,0.0,0.0
+BM25,typo_duplicate,74.033,0.69,0.796,8.267,21.478,5,11.133,13.072
+BM25,typo_omit,74.433,0.519,0.798,7.733,21.0,5,10.733,12.603
+BM25,typo_transpose,73.978,0.695,0.795,8.111,21.044,5,11.189,13.138
+BM25,typo_keyboard,74.111,0.829,0.795,8.044,21.433,5,11.056,12.981
+BM25,typo_mixed,73.633,0.659,0.791,8.133,21.422,5,11.533,13.542
+TF-IDF (study bot),original,84.5,,0.886,4.444,4.444,1,0.0,0.0
+TF-IDF (study bot),lowercase,84.5,,0.886,4.444,4.444,1,0.0,0.0
+TF-IDF (study bot),no_punctuation,84.5,,0.886,4.444,4.444,1,0.0,0.0
+TF-IDF (study bot),casual,84.5,,0.886,4.444,4.444,1,0.0,0.0
+TF-IDF (study bot),textspeak,84.5,,0.886,4.444,4.444,1,0.0,0.0
+TF-IDF (study bot),typo_duplicate,73.256,0.895,0.784,9.6,23.011,5,11.244,13.307
+TF-IDF (study bot),typo_omit,73.611,0.232,0.787,9.111,22.589,5,10.889,12.886
+TF-IDF (study bot),typo_transpose,73.3,0.421,0.784,9.433,22.267,5,11.2,13.254
+TF-IDF (study bot),typo_keyboard,73.422,0.452,0.785,9.378,22.9,5,11.078,13.11
+TF-IDF (study bot),typo_mixed,72.822,0.483,0.78,9.422,22.822,5,11.678,13.82
