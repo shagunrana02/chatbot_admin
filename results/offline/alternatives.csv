@@ -1,0 +1,9 @@
+model,hit1,hit3,mrr,hit1_typos,typo_cost_pts,oos_refused,ms
+TF-IDF (study bot),84.2,92.47,0.89,72.61,11.59,26.62,0.01
+BM25,82.89,92.38,0.88,71.87,11.02,24.96,0.01
+Char n-gram TF-IDF,83.36,97.68,0.9,79.14,4.22,30.34,0.03
+Word + char hybrid (alpha=0.5),89.33,97.17,0.93,81.97,7.35,35.02,0.04
+LSA (latent semantic),63.24,93.0,0.77,57.96,5.27,45.36,0.01
+Word + LSA hybrid (alpha=0.9),84.6,94.76,0.9,73.63,10.98,26.68,0.01
+Rank fusion: TF-IDF + BM25 + Char n-gram TF-IDF + LSA,86.32,95.14,0.91,76.75,9.57,29.75,0.05
+Supervised intent classifier (needs labelled data),99.91,,,98.96,0.95,99.92,0.04

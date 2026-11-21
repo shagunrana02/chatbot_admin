@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+sessions/
+sessions_synthetic/
+results_synthetic/
+logs/
+results/coding.json
+results/analysis/
+.DS_Store

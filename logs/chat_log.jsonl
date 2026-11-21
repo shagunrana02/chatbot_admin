@@ -1,3 +1,0 @@
-{"type": "chat", "id": "94b47c51ef", "time": "2026-11-17T13:56:08+00:00", "query": "Can I use a discount code?", "doc_id": "DIS03", "topic": "discounts", "score": 0.3834, "confidence": "high", "ms": 3.78, "helpful": null}
-{"type": "chat", "id": "b9bde82d71", "time": "2026-11-17T13:56:11+00:00", "query": "Do you ship internationally?", "doc_id": "SHP05", "topic": "shipping", "score": 0.2282, "confidence": "medium", "ms": 2.98, "helpful": null}
-{"type": "chat", "id": "eafe995db7", "time": "2026-11-17T13:56:13+00:00", "query": "Can I cancel my order?", "doc_id": "ORD05", "topic": "tracking", "score": 0.5514, "confidence": "high", "ms": 4.26, "helpful": null}
